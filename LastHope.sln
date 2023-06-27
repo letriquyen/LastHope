@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastHope", "LastHope\LastHope.csproj", "{A4DA947D-A3E8-45AC-888B-C996CD04E1F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LastHope", "LastHope\LastHope.csproj", "{A4DA947D-A3E8-45AC-888B-C996CD04E1F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{B2AF10C3-23BB-41B1-9156-5F822AB4FA52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{FF5549A0-C995-407C-A448-0154A2C7F70E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{A4DA947D-A3E8-45AC-888B-C996CD04E1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4DA947D-A3E8-45AC-888B-C996CD04E1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4DA947D-A3E8-45AC-888B-C996CD04E1F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2AF10C3-23BB-41B1-9156-5F822AB4FA52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2AF10C3-23BB-41B1-9156-5F822AB4FA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2AF10C3-23BB-41B1-9156-5F822AB4FA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2AF10C3-23BB-41B1-9156-5F822AB4FA52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF5549A0-C995-407C-A448-0154A2C7F70E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5549A0-C995-407C-A448-0154A2C7F70E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF5549A0-C995-407C-A448-0154A2C7F70E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF5549A0-C995-407C-A448-0154A2C7F70E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
