@@ -1,0 +1,66 @@
+﻿@page
+@model LastHope.Pages.Flats.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Flat[0].Detail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flat[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flat[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flat[0].RoomNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flat[0].Building)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flat[0].FlatType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Flat) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Detail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Building.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlatType.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
