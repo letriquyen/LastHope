@@ -5,7 +5,6 @@ namespace Repository.Models
 {
     public partial class BillItem
     {
-        public int Id { get; set; }
         public int? BillId { get; set; }
         public int? ServiceId { get; set; }
         public int? Quantity { get; set; }

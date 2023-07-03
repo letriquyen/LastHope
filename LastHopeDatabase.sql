@@ -3,8 +3,8 @@ Use LastHopeDatabase
 
 Create Table UserAccount ( 
 	ID int PRIMARY KEY,
-	Phone nvarchar(50), 
-	Password nvarchar(150),
+	Phone nvarchar(50) NOT NULL, 
+	Password nvarchar(150) NOT NULL,
 	Fullname nvarchar(200),
 	DayOfBirth Date,
 	Gender bit,
@@ -13,7 +13,7 @@ Create Table UserAccount (
 	CitizenID nvarchar(50),
 	DateJoin Date,
 	[Status] int,
-	RoleUser int,
+	RoleUser int NOT NULL,
 )
 
 Create Table Building (
@@ -70,14 +70,6 @@ Create Table Bill (
 	Content nvarchar(255),
 )
 
-Create Table BillItem (
-	ID int PRIMARY KEY,
-	BillID int FOREIGN KEY REFERENCES Bill(ID),
-	ServiceID int FOREIGN KEY REFERENCES [Service](ID),
-	Quantity int,
-	[Value] decimal,
-)
-
 Create Table [Service] (
 	ID int PRIMARY KEY,
 	Code nvarchar(100),
@@ -86,3 +78,11 @@ Create Table [Service] (
 	Price decimal,
 	[Status] int,
 )
+
+Create Table BillItem (
+	BillID int FOREIGN KEY REFERENCES Bill(ID),
+	ServiceID int FOREIGN KEY REFERENCES [Service](ID),
+	Quantity int,
+	[Value] decimal,
+)
+

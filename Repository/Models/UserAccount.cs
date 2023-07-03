@@ -11,8 +11,8 @@ namespace Repository.Models
         }
 
         public int Id { get; set; }
-        public string? Phone { get; set; }
-        public string? Password { get; set; }
+        public string Phone { get; set; } = null!;
+        public string Password { get; set; } = null!;
         public string? Fullname { get; set; }
         public DateTime? DayOfBirth { get; set; }
         public bool? Gender { get; set; }

@@ -31,17 +31,19 @@ namespace Repository.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(GetConnection());
+                optionsBuilder.UseSqlServer(GetConnectionString());
             }
         }
 
-        public string GetConnection()
+        private string GetConnectionString()
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
+            IConfiguration config = new ConfigurationBuilder()
+             .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", true, true)
             .Build();
-            return configuration.GetConnectionString("LastHopeDB");
+            var strConn = config["ConnectionStrings:LastHopeDB"];
+
+            return strConn;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -74,11 +76,9 @@ namespace Repository.Models
 
             modelBuilder.Entity<BillItem>(entity =>
             {
-                entity.ToTable("BillItem");
+                entity.HasNoKey();
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.ToTable("BillItem");
 
                 entity.Property(e => e.BillId).HasColumnName("BillID");
 
@@ -87,14 +87,14 @@ namespace Repository.Models
                 entity.Property(e => e.Value).HasColumnType("decimal(18, 0)");
 
                 entity.HasOne(d => d.Bill)
-                    .WithMany(p => p.BillItems)
+                    .WithMany()
                     .HasForeignKey(d => d.BillId)
-                    .HasConstraintName("FK__BillItem__BillID__5441852A");
+                    .HasConstraintName("FK__BillItem__BillID__4D94879B");
 
                 entity.HasOne(d => d.Service)
-                    .WithMany(p => p.BillItems)
+                    .WithMany()
                     .HasForeignKey(d => d.ServiceId)
-                    .HasConstraintName("FK__BillItem__Servic__5535A963");
+                    .HasConstraintName("FK__BillItem__Servic__4E88ABD4");
             });
 
             modelBuilder.Entity<Building>(entity =>
