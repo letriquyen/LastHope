@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace Repository.Models
@@ -8,7 +9,7 @@ namespace Repository.Models
         public int Id { get; set; }
         public string? Detail { get; set; }
         public decimal? Price { get; set; }
-        public int? Status { get; set; }
+        public FlatStatus? Status { get; set; }
         public int? BuildingId { get; set; }
         public int? FlatTypeId { get; set; }
         public int? RoomNumber { get; set; }

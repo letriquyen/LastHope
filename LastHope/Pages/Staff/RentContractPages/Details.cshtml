@@ -1,0 +1,67 @@
+﻿@page
+@model LastHope.Pages.Staff.RentContractPages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>RentContract</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RentContract.Value)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RentContract.Value)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RentContract.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RentContract.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RentContract.ExpiryDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RentContract.ExpiryDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RentContract.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RentContract.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RentContract.Contract)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RentContract.Contract)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RentContract.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RentContract.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RentContract.Customer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RentContract.Customer.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RentContract.Flat)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RentContract.Flat.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.RentContract?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

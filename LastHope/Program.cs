@@ -6,6 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUserAccountRepository, UserAccountRepository>();
+builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
+builder.Services.AddScoped<IFlatRepository, FlatRepository>();
+builder.Services.AddScoped<IRentContractRepository, RentContractRepository>();
+builder.Services.AddScoped<IFlatTypeRepository, FlatTypeRepository>();
 builder.Services.AddSession();
 var app = builder.Build();
 

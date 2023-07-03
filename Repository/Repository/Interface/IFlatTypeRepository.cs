@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Repository.Repository.Interface
 {
-    public interface IUserAccountRepository
+    public interface IFlatTypeRepository
     {
-        UserAccount Login(string phone, string password);
-        List<UserAccount> Get();
+        List<FlatType> Get();
     }
 }

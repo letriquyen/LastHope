@@ -25,13 +25,13 @@ namespace LastHope.Pages
                 {
                     case 0:
                         return RedirectToPage("Admin/Index"); // tuong trung
-                        break;
+                        
                     case 1:
-                        return RedirectToPage("Staff/Index");
-                        break;
+                        return RedirectToPage("Staff/Building/Index");
+                        
                     case 2:
                         return RedirectToPage("Customer/Index");
-                        break;
+                        
                 }
 
             }
