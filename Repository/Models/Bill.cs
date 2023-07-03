@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace Repository.Models
@@ -18,7 +19,7 @@ namespace Repository.Models
         public string? Sender { get; set; }
         public string? Receiver { get; set; }
         public string? Content { get; set; }
-        public int? Type { get; set; }
+        public BillType? Type { get; set; }
 
         public virtual RentContract? RentContract { get; set; }
         public virtual ICollection<BillItem> BillItems { get; set; }
