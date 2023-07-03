@@ -80,14 +80,7 @@ Create Table [Service] (
 	Price decimal,
 	[Status] int,
 )
-Create Table [Service] (
-	ID int PRIMARY KEY,
-	Code nvarchar(100),
-	Name nvarchar(200),
-	Description nvarchar(255),
-	Price decimal,
-	[Status] int,
-)
+
 Create Table BillItem (
 	BillID int FOREIGN KEY REFERENCES Bill(ID),
 	ServiceID int FOREIGN KEY REFERENCES [Service](ID),
