@@ -1,4 +1,5 @@
 Create Database LastHopeDatabase
+go
 Use LastHopeDatabase
 
 Create Table UserAccount ( 
@@ -69,15 +70,6 @@ Create Table Bill (
 	Receiver nvarchar(200),
 	Content nvarchar(255),
 )
-
-Create Table BillItem (
-	ID int PRIMARY KEY,
-	BillID int FOREIGN KEY REFERENCES Bill(ID),
-	ServiceID int FOREIGN KEY REFERENCES [Service](ID),
-	Quantity int,
-	[Value] decimal,
-)
-
 Create Table [Service] (
 	ID int PRIMARY KEY,
 	Code nvarchar(100),
@@ -86,3 +78,11 @@ Create Table [Service] (
 	Price decimal,
 	[Status] int,
 )
+Create Table BillItem (
+	ID int PRIMARY KEY,
+	BillID int FOREIGN KEY REFERENCES Bill(ID),
+	ServiceID int FOREIGN KEY REFERENCES [Service](ID),
+	Quantity int,
+	[Value] decimal,
+)
+

@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Repository.Repository.Interface
 {
-    public interface IUserAccountRepository
+    public interface IBuildingRepository
     {
-        UserAccount Login(string phone, string password);
-        List<UserAccount> Get();
+        bool Add(Building building);
+        bool Update(Building building);
+        Building? Get(int id);
+        List<Building> Get();
     }
 }

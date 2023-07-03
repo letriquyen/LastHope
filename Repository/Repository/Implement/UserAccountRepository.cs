@@ -13,6 +13,11 @@ namespace Repository.Repository.Implement
         private LastHopeDatabaseContext _context = new();
         public UserAccountRepository() { }
 
+        public List<UserAccount> Get()
+        {
+            return _context.UserAccounts.ToList();
+        }
+
         public UserAccount Login(string phone, string password)
         {
             return _context.UserAccounts.FirstOrDefault(a => a.Phone.Equals(phone) && a.Password.Equals(password));

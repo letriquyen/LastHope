@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace Repository.Models
@@ -17,7 +18,7 @@ namespace Repository.Models
         public decimal? Value { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? ExpiryDate { get; set; }
-        public int? Status { get; set; }
+        public RentContractStatus? Status { get; set; }
         public string? Contract { get; set; }
         public string? Title { get; set; }
 
