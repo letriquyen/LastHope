@@ -1,8 +1,9 @@
 Create Database LastHopeDatabase
+go
 Use LastHopeDatabase
 
 Create Table UserAccount ( 
-	ID int PRIMARY KEY,
+	ID int identity(1,1) PRIMARY KEY,
 	Phone nvarchar(50) NOT NULL, 
 	Password nvarchar(150) NOT NULL,
 	Fullname nvarchar(200),
@@ -17,7 +18,7 @@ Create Table UserAccount (
 )
 
 Create Table Building (
-	ID int PRIMARY KEY, 
+	ID int identity(1,1) PRIMARY KEY, 
 	Name nvarchar(200),
 	[Address] nvarchar(255), 
 	[Status] int,
@@ -25,13 +26,13 @@ Create Table Building (
 )
 
 Create Table FlatType (
-	ID int PRIMARY KEY, 
+	ID int identity(1,1) PRIMARY KEY, 
 	Name nvarchar(200),
 	Description nvarchar(255),
 )
 
 Create Table Flat (
-	ID int PRIMARY KEY,
+	ID int identity(1,1) PRIMARY KEY,
 	Detail nvarchar(255),
 	Price decimal,
 	[Status] int, 
@@ -41,7 +42,7 @@ Create Table Flat (
 )
 
 Create Table RentContract (
-	ID int PRIMARY KEY,
+	ID int identity(1,1) PRIMARY KEY,
 	CustomerID int FOREIGN KEY REFERENCES UserAccount(ID),
 	FlatID int FOREIGN KEY REFERENCES Building(ID), 
 	[Value] decimal,
@@ -53,14 +54,14 @@ Create Table RentContract (
 )
 
 Create Table Term (
-	ID int PRIMARY KEY,
+	ID int identity(1,1) PRIMARY KEY,
 	RentContractID int FOREIGN KEY REFERENCES RentContract(ID),
 	Title nvarchar(200),
 	Content nvarchar(255),
 )
 
 Create Table Bill (
-	ID int PRIMARY KEY,
+	ID int identity(1,1) PRIMARY KEY,
 	RentContractID int FOREIGN KEY REFERENCES RentContract(ID),
 	[Date] Date,
 	[Value] decimal,
@@ -68,10 +69,11 @@ Create Table Bill (
 	Sender nvarchar(200),
 	Receiver nvarchar(200),
 	Content nvarchar(255),
+	[Type] int
 )
 
 Create Table [Service] (
-	ID int PRIMARY KEY,
+	ID int identity(1,1) PRIMARY KEY,
 	Code nvarchar(100),
 	Name nvarchar(200),
 	Description nvarchar(255),
@@ -84,5 +86,6 @@ Create Table BillItem (
 	ServiceID int FOREIGN KEY REFERENCES [Service](ID),
 	Quantity int,
 	[Value] decimal,
+	Primary key(BillID,ServiceID)
 )
 

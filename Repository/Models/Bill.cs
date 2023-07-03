@@ -5,6 +5,11 @@ namespace Repository.Models
 {
     public partial class Bill
     {
+        public Bill()
+        {
+            BillItems = new HashSet<BillItem>();
+        }
+
         public int Id { get; set; }
         public int? RentContractId { get; set; }
         public DateTime? Date { get; set; }
@@ -13,7 +18,9 @@ namespace Repository.Models
         public string? Sender { get; set; }
         public string? Receiver { get; set; }
         public string? Content { get; set; }
+        public int? Type { get; set; }
 
         public virtual RentContract? RentContract { get; set; }
+        public virtual ICollection<BillItem> BillItems { get; set; }
     }
 }

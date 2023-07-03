@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace Repository.Models
 {
@@ -31,19 +30,9 @@ namespace Repository.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(GetConnectionString());
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=(local);Database=LastHopeDatabase;Trusted_Connection=True; TrustServerCertificate=true");
             }
-        }
-
-        private string GetConnectionString()
-        {
-            IConfiguration config = new ConfigurationBuilder()
-             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", true, true)
-            .Build();
-            var strConn = config["ConnectionStrings:LastHopeDB"];
-
-            return strConn;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,9 +41,7 @@ namespace Repository.Models
             {
                 entity.ToTable("Bill");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Content).HasMaxLength(255);
 
@@ -71,12 +58,13 @@ namespace Repository.Models
                 entity.HasOne(d => d.RentContract)
                     .WithMany(p => p.Bills)
                     .HasForeignKey(d => d.RentContractId)
-                    .HasConstraintName("FK__Bill__RentContra__46E78A0C");
+                    .HasConstraintName("FK__Bill__RentContra__34C8D9D1");
             });
 
             modelBuilder.Entity<BillItem>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.BillId, e.ServiceId })
+                    .HasName("PK__BillItem__ADA34744E536F4A6");
 
                 entity.ToTable("BillItem");
 
@@ -87,23 +75,23 @@ namespace Repository.Models
                 entity.Property(e => e.Value).HasColumnType("decimal(18, 0)");
 
                 entity.HasOne(d => d.Bill)
-                    .WithMany()
+                    .WithMany(p => p.BillItems)
                     .HasForeignKey(d => d.BillId)
-                    .HasConstraintName("FK__BillItem__BillID__4D94879B");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__BillItem__BillID__398D8EEE");
 
                 entity.HasOne(d => d.Service)
-                    .WithMany()
+                    .WithMany(p => p.BillItems)
                     .HasForeignKey(d => d.ServiceId)
-                    .HasConstraintName("FK__BillItem__Servic__4E88ABD4");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__BillItem__Servic__3A81B327");
             });
 
             modelBuilder.Entity<Building>(entity =>
             {
                 entity.ToTable("Building");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Address).HasMaxLength(255);
 
@@ -114,9 +102,7 @@ namespace Repository.Models
             {
                 entity.ToTable("Flat");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
 
@@ -129,21 +115,19 @@ namespace Repository.Models
                 entity.HasOne(d => d.Building)
                     .WithMany(p => p.Flats)
                     .HasForeignKey(d => d.BuildingId)
-                    .HasConstraintName("FK__Flat__BuildingID__3C69FB99");
+                    .HasConstraintName("FK__Flat__BuildingID__2A4B4B5E");
 
                 entity.HasOne(d => d.FlatType)
                     .WithMany(p => p.Flats)
                     .HasForeignKey(d => d.FlatTypeId)
-                    .HasConstraintName("FK__Flat__FlatTypeID__3D5E1FD2");
+                    .HasConstraintName("FK__Flat__FlatTypeID__2B3F6F97");
             });
 
             modelBuilder.Entity<FlatType>(entity =>
             {
                 entity.ToTable("FlatType");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Description).HasMaxLength(255);
 
@@ -154,9 +138,7 @@ namespace Repository.Models
             {
                 entity.ToTable("RentContract");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Contract).HasMaxLength(100);
 
@@ -175,21 +157,19 @@ namespace Repository.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.RentContracts)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__RentContr__Custo__403A8C7D");
+                    .HasConstraintName("FK__RentContr__Custo__2E1BDC42");
 
                 entity.HasOne(d => d.Flat)
                     .WithMany(p => p.RentContracts)
                     .HasForeignKey(d => d.FlatId)
-                    .HasConstraintName("FK__RentContr__FlatI__412EB0B6");
+                    .HasConstraintName("FK__RentContr__FlatI__2F10007B");
             });
 
             modelBuilder.Entity<Service>(entity =>
             {
                 entity.ToTable("Service");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Code).HasMaxLength(100);
 
@@ -204,9 +184,7 @@ namespace Repository.Models
             {
                 entity.ToTable("Term");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Content).HasMaxLength(255);
 
@@ -217,16 +195,14 @@ namespace Repository.Models
                 entity.HasOne(d => d.RentContract)
                     .WithMany(p => p.Terms)
                     .HasForeignKey(d => d.RentContractId)
-                    .HasConstraintName("FK__Term__RentContra__440B1D61");
+                    .HasConstraintName("FK__Term__RentContra__31EC6D26");
             });
 
             modelBuilder.Entity<UserAccount>(entity =>
             {
                 entity.ToTable("UserAccount");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Address).HasMaxLength(255);
 
