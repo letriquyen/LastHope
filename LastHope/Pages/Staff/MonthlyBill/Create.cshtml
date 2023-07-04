@@ -1,0 +1,73 @@
+﻿@page
+@model LastHope.Pages.Staff.MonthlyBill.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Bill</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Bill.Id" class="control-label"></label>
+                <input asp-for="Bill.Id" class="form-control" />
+                <span asp-validation-for="Bill.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bill.RentContractId" class="control-label"></label>
+                <select asp-for="Bill.RentContractId" class ="form-control" asp-items="ViewBag.RentContractId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bill.Date" class="control-label"></label>
+                <input asp-for="Bill.Date" class="form-control" />
+                <span asp-validation-for="Bill.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bill.Value" class="control-label"></label>
+                <input asp-for="Bill.Value" class="form-control" />
+                <span asp-validation-for="Bill.Value" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bill.Status" class="control-label"></label>
+                <input asp-for="Bill.Status" class="form-control" />
+                <span asp-validation-for="Bill.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bill.Sender" class="control-label"></label>
+                <input asp-for="Bill.Sender" class="form-control" />
+                <span asp-validation-for="Bill.Sender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bill.Receiver" class="control-label"></label>
+                <input asp-for="Bill.Receiver" class="form-control" />
+                <span asp-validation-for="Bill.Receiver" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bill.Content" class="control-label"></label>
+                <input asp-for="Bill.Content" class="form-control" />
+                <span asp-validation-for="Bill.Content" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Bill.Type" class="control-label"></label>
+                <input asp-for="Bill.Type" class="form-control" />
+                <span asp-validation-for="Bill.Type" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

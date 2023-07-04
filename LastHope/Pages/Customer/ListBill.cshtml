@@ -1,0 +1,84 @@
+﻿@page
+@model LastHope.Pages.Customer.ListBillModel
+
+@{
+    ViewData["Title"] = "ListBill";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<h1>ListBill</h1>
+  
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  Notification
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    @foreach (var item in Model.NewBill)
+    {
+        <a class="dropdown-item" href="https://www.freecodecamp.org/" target="_blank">@item.Content - @item.Value</a>
+    }
+  </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Sender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Receiver)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].RentContract)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Bill) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Receiver)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentContract.Id)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
