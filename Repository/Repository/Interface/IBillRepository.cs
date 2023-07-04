@@ -14,5 +14,7 @@ namespace Repository.Repository.Interface
         List<Bill> Get();
 
         List<Bill> GetNewBillList();
+
+        Bill Get(int id);
     }
 }

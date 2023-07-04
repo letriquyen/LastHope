@@ -31,5 +31,10 @@ namespace Repository.Repository.Implement
         {
             return _context.Bills.Where(b => b.Status == 0).ToList();
         }
+
+        public Bill Get(int id)
+        {
+            return _context.Bills.FirstOrDefault(b => b.Id == id);
+        }
     }
 }

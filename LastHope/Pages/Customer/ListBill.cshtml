@@ -19,7 +19,12 @@
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     @foreach (var item in Model.NewBill)
     {
-        <a class="dropdown-item" href="https://www.freecodecamp.org/" target="_blank">@item.Content - @item.Value</a>
+        <a class="dropdown-item" asp-page="./BillDetail" asp-route-id="@item.Id" target="_blank">
+            @item.Content - @item.Value VNĐ
+            <br/>@item.Date
+            <br/>@item.Sender
+            @*<br/>@item.Status*@
+        </a>
     }
   </div>
 </div>
@@ -27,6 +32,12 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].RentContractId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Bill[0].Date)
             </th>
@@ -55,6 +66,12 @@
 @foreach (var item in Model.Bill) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentContractId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
@@ -76,7 +93,7 @@
                 @Html.DisplayFor(modelItem => item.RentContract.Id)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./BillDetail" asp-route-id="@item.Id">Details</a> |
             </td>
         </tr>
 }

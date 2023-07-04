@@ -20,7 +20,7 @@ namespace Repository.Models
         [Required(ErrorMessage = "Please input information")]
         public int? RentContractId { get; set; }
 
-
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Please input information")]
         public DateTime? Date { get; set; }
 
