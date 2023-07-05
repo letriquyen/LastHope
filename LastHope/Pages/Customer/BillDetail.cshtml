@@ -67,7 +67,11 @@
         </dd>
     </dl>
 </div>
-<button type="button" class="btn btn-primary">Pay Bill</button>
+
+<form method="post">
+    <button type="submit" class="btn btn-primary" asp-page-handler="PayBill">Pay Bill</button>
+</form>
+
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>

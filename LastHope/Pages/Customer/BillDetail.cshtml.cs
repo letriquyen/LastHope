@@ -17,18 +17,24 @@ namespace LastHope.Pages.Customer
         public BillDetailModel(IBillRepository billRepository)
         {
             _billRepository = billRepository;
+
         }
 
         public Bill Bill { get; set; } = default!; 
 
+        private Bill NewBill { get; set; }
+        
         public IActionResult OnGet(int id)
         {
             if (id == null || _billRepository.Get() == null)
             {
                 return NotFound();
             }
+            
+            HttpContext.Session.SetInt32("id", id);
 
             Bill = _billRepository.Get(id);
+            
 
             if (Bill == null)
             {
@@ -36,6 +42,14 @@ namespace LastHope.Pages.Customer
             }
 
             return Page();
+        }
+
+        public IActionResult OnPostPayBill ()
+        {
+            var id = HttpContext.Session.GetInt32("id");
+            NewBill = _billRepository.Get((int)id);
+            _billRepository.UpdateStatus(NewBill);
+            return RedirectToPage("/Customer/ListBill");
         }
     }
 }

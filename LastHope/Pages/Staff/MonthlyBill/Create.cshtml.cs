@@ -40,7 +40,7 @@ namespace LastHope.Pages.Staff.MonthlyBill
 
             _billRepository.Add(Bill);
 
-            return RedirectToPage("/Privacy");
+            return RedirectToPage("/Staff/MonthlyBill/Create");
         }
     }
 }

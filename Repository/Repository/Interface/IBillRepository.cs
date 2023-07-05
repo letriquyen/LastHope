@@ -16,5 +16,7 @@ namespace Repository.Repository.Interface
         List<Bill> GetNewBillList();
 
         Bill Get(int id);
+
+        bool UpdateStatus(Bill bill);
     }
 }

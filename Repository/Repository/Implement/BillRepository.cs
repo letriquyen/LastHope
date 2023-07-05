@@ -36,5 +36,12 @@ namespace Repository.Repository.Implement
         {
             return _context.Bills.FirstOrDefault(b => b.Id == id);
         }
+
+        public bool UpdateStatus(Bill bill)
+        {
+            bill.Status = 1;
+            _context.Bills.Update(bill);
+            return _context.SaveChanges() > 0;
+        }
     }
 }
