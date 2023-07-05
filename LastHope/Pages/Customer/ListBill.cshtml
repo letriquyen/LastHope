@@ -56,9 +56,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Bill[0].Content)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bill[0].RentContract)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -78,7 +75,15 @@
                 @Html.DisplayFor(modelItem => item.Value)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @*@Html.DisplayFor(modelItem => item.Status)*@
+                @if (item.Status == 0)
+                {
+                    <span>Not paid</span>
+                }
+                else if (item.Status == 1)
+                {
+                    <span>Paid</span>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Sender)
@@ -88,9 +93,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentContract.Id)
             </td>
             <td>
                 <a asp-page="./BillDetail" asp-route-id="@item.Id">Details</a> |
