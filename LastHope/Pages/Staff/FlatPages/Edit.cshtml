@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "_LayoutStaff";
 }
 
 <h1>Edit</h1>
@@ -35,7 +36,7 @@
                 <span asp-validation-for="Flat.BuildingId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Flat.FlatTypeId" class="control-label"></label>
+                <label asp-for="Flat.FlatType" class="control-label"></label>
                 <select asp-for="Flat.FlatTypeId" class="form-control" asp-items="ViewBag.FlatTypeId"></select>
                 <span asp-validation-for="Flat.FlatTypeId" class="text-danger"></span>
             </div>

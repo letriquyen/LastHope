@@ -24,6 +24,9 @@ namespace LastHope.Pages.Staff.RentContractPages
         public void OnGet()
         {
             RentContract = _rentContractRepository.Get();
+            
         }
+        
+      
     }
 }

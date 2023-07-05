@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace Repository.Models
@@ -21,7 +22,7 @@ namespace Repository.Models
         public string? CitizenId { get; set; }
         public DateTime? DateJoin { get; set; }
         public int? Status { get; set; }
-        public int RoleUser { get; set; }
+        public Role RoleUser { get; set; }
 
         public virtual ICollection<RentContract> RentContracts { get; set; }
     }

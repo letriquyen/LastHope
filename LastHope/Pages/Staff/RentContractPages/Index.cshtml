@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_LayoutStaff";
 }
 
 <h1>Index</h1>
@@ -14,28 +15,28 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.RentContract[0].Flat.Building)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentContract[0].Flat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentContract[0].Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentContract[0].Title)
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.RentContract[0].Value)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentContract[0].StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentContract[0].ExpiryDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RentContract[0].Status)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RentContract[0].Contract)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentContract[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentContract[0].Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentContract[0].Flat)
             </th>
             <th></th>
         </tr>
@@ -44,28 +45,36 @@
 @foreach (var item in Model.RentContract) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Value)
+                @Html.DisplayFor(modelItem => item.Flat.Building.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
+                @Html.DisplayFor(modelItem => item.Flat.RoomNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ExpiryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contract)
+                @Html.DisplayFor(modelItem => item.Customer.Fullname)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.Id)
+                @{
+                    var startDate = item.StartDate.Value.ToString("dd/MM/yyyy");
+                    var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
+                }
+                From 
+                @Html.DisplayFor(modelItem => startDate)
+                to 
+                @Html.DisplayFor(modelItem => expiryDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Flat.Id)
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>    
+                <a href="data:application/octet-stream;base64,@item.Contract" download="@item.Customer.Fullname .pdf">Download File</a>
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

@@ -16,20 +16,31 @@ namespace Repository.Repository.Implement
         public RentContractRepository()
         {
         }
-        public bool Add(RentContract rentContract)
+        public RentContract? Add(RentContract rentContract)
         {
             _context.RentContracts.Add(rentContract);
-            return _context.SaveChanges() > 0;
+            if (_context.SaveChanges() > 0)
+            {
+                return rentContract;
+            }
+            else return null;
         }
 
         public List<RentContract> Get()
         {
-            return _context.RentContracts.ToList();
+            return _context.RentContracts
+                .Include(c => c.Flat.Building)
+                .Include(c => c.Customer)
+                .ToList();
         }
 
         public RentContract? Get(int id)
         {
-            return _context.RentContracts.FirstOrDefault(rc => rc.Id == id);
+            return _context.RentContracts
+                .Include(c => c.Flat.Building)
+                .Include(c => c.Customer)
+                .Include(c => c.Terms)
+                .FirstOrDefault(rc => rc.Id == id);
         }
 
         public bool Update(RentContract rentContract)

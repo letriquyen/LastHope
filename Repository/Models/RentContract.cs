@@ -23,7 +23,7 @@ namespace Repository.Models
         public string? Title { get; set; }
 
         public virtual UserAccount? Customer { get; set; }
-        public virtual Building? Flat { get; set; }
+        public virtual Flat? Flat { get; set; }
         public virtual ICollection<Bill> Bills { get; set; }
         public virtual ICollection<Term> Terms { get; set; }
     }

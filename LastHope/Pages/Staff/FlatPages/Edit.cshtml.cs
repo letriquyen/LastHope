@@ -41,8 +41,8 @@ namespace LastHope.Pages.Staff.FlatPages
                 return NotFound();
             }
             Flat = flat;
-            ViewData["BuildingId"] = new SelectList(_buildingRepository.Get(), "Id", "Id");
-            ViewData["FlatTypeId"] = new SelectList(_flatTypeRepository.Get(), "Id", "Id");
+            ViewData["BuildingId"] = new SelectList(_buildingRepository.Get(), "Id", "Name");
+            ViewData["FlatTypeId"] = new SelectList(_flatTypeRepository.Get(), "Id", "Name");
             return Page();
         }
 
