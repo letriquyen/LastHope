@@ -59,18 +59,20 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Bill.Content)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Bill.RentContract)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Bill.RentContract.Id)
-        </dd>
     </dl>
 </div>
 
-<form method="post">
-    <button type="submit" class="btn btn-primary" asp-page-handler="PayBill">Pay Bill</button>
-</form>
+@if(Model.Bill.Status == 0)
+{
+    <form method="post">
+        <button type="submit" class="btn btn-primary" asp-page-handler="PayBill">Pay Bill</button>
+    </form>
+}
+else
+{
+    
+}
+
 
 <div>
     <a asp-page="./Index">Back to List</a>

@@ -23,8 +23,16 @@ namespace LastHope.Pages.Staff.MonthlyBill
         public IActionResult OnGet()
         {
             ViewData["RentContractId"] = new SelectList(_rentContractRepository.Get(), "Id", "Id");
+            //ViewData["StatusList"] = new SelectList(statusList, "Id", "Id");
+            ViewData["StatusList"] = new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Value = "0", Text = "Not paid" },
+                new SelectListItem { Value = "1", Text = "Paid" }
+            }, "Value", "Text", 0);
             return Page();
         }
+
+        List<int> statusList = new List<int> { 0, 1 };
 
         [BindProperty]
         public Bill Bill { get; set; } = default!;
