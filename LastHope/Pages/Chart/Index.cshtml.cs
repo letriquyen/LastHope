@@ -24,10 +24,10 @@ namespace LastHope.Pages.Chart
 
         public async Task<IActionResult> OnGet()
         {
-            //if (HttpContext.Session.GetString("Phone") == null)
-            //{
-            //    return RedirectToPage("Login");
-            //}
+            if (HttpContext.Session.GetString("Role") == null)
+            {
+                return RedirectToPage("/Login");
+            }
             buildings = _buildingRepository.Get();
 
             for (int i = 1; i <= 12; i++)

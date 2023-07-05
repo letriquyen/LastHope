@@ -43,9 +43,9 @@ namespace Repository.Models
 
         [Required(ErrorMessage = "Please input information")]
         public string? Content { get; set; }
-        //public BillType? Type { get; set; }
+        public BillType? Type { get; set; }
 
         public virtual RentContract? RentContract { get; set; }
-        public virtual ICollection<BillItem> BillItems { get; set; }
+        public virtual ICollection<BillItem>? BillItems { get; set; }
     }
 }

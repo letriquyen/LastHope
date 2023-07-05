@@ -10,23 +10,25 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using System.Diagnostics.Metrics;
 using Repository.Repository.Interface;
+using Repository.Enum;
 
-namespace SafeBuilding.Pages
+namespace LastHope.Pages.Staff.BillPage
 {
     public class UploadModel : PageModel
     {
 
         private readonly IBillRepository _billRepository;
 
-
+        private readonly IBillItemRepository _billItemRepository;
         public IEnumerable<Bill> Bills { get; set; }
 
         private readonly ILogger<UploadModel> _logger;
 
-        public UploadModel(ILogger<UploadModel> logger, IBillRepository billRepository)
+        public UploadModel(ILogger<UploadModel> logger, IBillRepository billRepository, IBillItemRepository billItemRepository)
         {
             _logger = logger;
             _billRepository = billRepository;
+            _billItemRepository = billItemRepository;
         }
 
 
@@ -56,6 +58,7 @@ namespace SafeBuilding.Pages
                 fileStream.Flush();
             }
             var invoice = this.GetBillList(file.FileName);
+            ViewData["Message"] = "Create bills and send successfully!";
             return Page();
         }
 
@@ -76,18 +79,19 @@ namespace SafeBuilding.Pages
                     while (reader.Read())
                     {
                         i++;
-                        if(i >= 2)
-                        {   
-                            int contractId = Int32.Parse(reader.GetValue(3).ToString());
+                        if(i >= 3)
+                        {
+                            var x = reader.GetValue(3);
+                            int contractId = int.Parse(reader.GetValue(3).ToString());
                             decimal rentFee = Decimal.Parse( reader.GetValue(4).ToString());
                             decimal electricFee = Decimal.Parse(reader.GetValue(5).ToString());
                             decimal waterFee = Decimal.Parse(reader.GetValue(6).ToString());
                             decimal managementFee = Decimal.Parse(reader.GetValue(7).ToString());
                             decimal parkingFee = Decimal.Parse(reader.GetValue(8).ToString());
-                            decimal total = Decimal.Parse(reader.GetValue(9).ToString());
+                            decimal total = rentFee + electricFee + waterFee + managementFee + parkingFee;
 
 
-                            string email = reader.GetValue(10).ToString();
+                            string email = reader.GetValue(9).ToString();
 
                             bill = new Bill()
                             {
@@ -95,7 +99,10 @@ namespace SafeBuilding.Pages
                                 Date = DateTime.Now,
                                 Value = total,
                                 Status = 0,
-                                Content = "Monthly bill"
+                                Content = "Monthly bill",
+                                Sender = "Staff",
+                                Receiver = "Customer",
+                                Type = BillType.BILL
                                 //rent = reader.GetValue(0).ToString(),
                                 //water = reader.GetValue(1).ToString(),
                                 //electicity = reader.GetValue(2).ToString(),
@@ -103,37 +110,37 @@ namespace SafeBuilding.Pages
                                 //parking = reader.GetValue(4).ToString(),
                                 //email = reader.GetValue(5).ToString()
                             };
-
+                            bill = _billRepository.AddBill(bill);
                             for (int j = 4; j < 9; j++)
                             {
                                 item = new BillItem
                                 {
-                                    ServiceId = (int)(j-3),
+                                    ServiceId = (int)(j - 3),
                                     Quantity = 1,
-                                    Value = Decimal.Parse(reader.GetValue(j).ToString())
+                                    Value = Decimal.Parse(reader.GetValue(j).ToString()),
+                                    BillId = bill.Id
                                 };
+                                _billItemRepository.Add(item);
                                 items.Add(item);
                             }
-
-                            _billRepository.Add(bill, items);
                             string mainBody = "<tr>" +
                                                     "<th>" + reader.GetValue(4).ToString() + "</th>" +
                                                     "<th>" + reader.GetValue(5).ToString() + "</th>" +
                                                     "<th>" + reader.GetValue(6).ToString() + "</th>" +
                                                     "<th>" + reader.GetValue(7).ToString() + "</th>" +
                                                     "<th>" + reader.GetValue(8).ToString() + "</th>" +
-                                                    "<th>" + reader.GetValue(9).ToString() + "</th>" +
+                                                    "<th>" + total + "</th>" +
                                                 "</tr>";
-                            string body = "<html><head></head><body>" +
+                            string body = "<html><head></head><body>This is monthly bill!" +
                     @"<table border=""1"" cellpadding=""5"" style=""border-collapse: collapse;""><tr style=""color:white;background-Color:SkyBlue;font-weight:bold;"">" +
-                    "<td>Rent</td><td>Electricity</td><td>Water</td><td>Management</td><td>Parking</td><td>Total</td>" + "</tr>" + mainBody + "</table></body></html>";
-                            Email.From.Add(MailboxAddress.Parse("safebuilding76@gmail.com"));
+                    "<td>Rent</td><td>Electricity</td><td>Water</td><td>Management</td><td>Parking</td><td>Total</td>" + "</tr>" + mainBody + "</table>Currency unit: VNĐ</body></html>";
+                            Email.From.Add(MailboxAddress.Parse("safebuilding.swd@gmail.com"));
                             Email.To.Add(MailboxAddress.Parse(email));
-                            Email.Subject = "New Invoice ";
+                            Email.Subject = "New Bill ";
                             Email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
                             using var smtp = new SmtpClient();
                             smtp.Connect("smtp.gmail.com", 465, true);
-                            smtp.Authenticate("safebuilding76@gmail.com", "afcllbwpxmsebrnw");
+                            smtp.Authenticate("safebuilding.swd@gmail.com", "tqnvzrldadgobqgy");
                             smtp.Send(Email);
                             smtp.Disconnect(true);
 

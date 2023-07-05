@@ -58,17 +58,19 @@
             </td>
             
             <td>
-                @{
-                    var startDate = item.StartDate.Value.ToString("dd/MM/yyyy");
-                    var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
-                }
+                    @{
+                        var startDate = item.StartDate.Value.ToString("dd/MM/yyyy");
+                        var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
+                        var value = (int)item.Value.Value;
+                    }
                 From 
                 @Html.DisplayFor(modelItem => startDate)
                 to 
                 @Html.DisplayFor(modelItem => expiryDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Value)
+                @Html.DisplayFor(modelItem => value) VNĐ
+                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)

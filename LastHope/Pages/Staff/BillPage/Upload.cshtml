@@ -3,11 +3,17 @@
 @model UploadModel
 @{
     ViewData["Title"] = "Upload";
+    Layout = "_LayoutStaff";
 }
 
 <div class="text-center">
     <h1 class="display-4">File Upload</h1>
 </div>
+	@if (ViewData["Message"] != null)
+	{
+		<h1 style="color:green">@ViewData["Message"]</h1>
+	}
+
 <div>
     <div class="mb-3 mt-3">
         <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
