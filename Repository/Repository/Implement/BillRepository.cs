@@ -51,19 +51,9 @@ namespace Repository.Repository.Implement
             return _context.SaveChanges() > 0;
         }
 
-        public List<Bill> Get()
-        {
-            return _context.Bills.ToList();
-        }
-
         public List<Bill> GetNewBillList()
         {
             return _context.Bills.Where(b => b.Status == 0).ToList();
-        }
-
-        public Bill Get(int id)
-        {
-            return _context.Bills.FirstOrDefault(b => b.Id == id);
         }
 
         public bool UpdateStatus(Bill bill)
