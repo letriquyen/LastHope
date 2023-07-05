@@ -1,4 +1,5 @@
-﻿using Repository.Models;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Repository.Models;
 using Repository.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,34 @@ namespace Repository.Repository.Implement
 
         public BillRepository()
         {
+        }
+        public bool Add(Bill bill, List<BillItem> billItems)
+        {
+            EntityEntry<Bill> billEntry = _context.Bills.Add(bill);
+            bill = billEntry.Entity;
+            foreach (BillItem item in billItems)
+            {
+                item.BillId = bill.Id;
+                _context.BillItems.Add(item);
+            }
+            return _context.SaveChanges() > 0;
+        }
+
+        public Bill? Get(int id)
+        {
+            return _context.Bills.FirstOrDefault(b => b.Id == id);
+        }
+
+        public List<Bill> Get()
+        {
+            return _context.Bills.ToList();
+        }
+
+        public bool Update(Bill bill)
+        {
+            bill.Status = 1;
+            _context.Bills.Update(bill);
+            return _context.SaveChanges() > 0;
         }
 
         public bool Add(Bill Bill)
