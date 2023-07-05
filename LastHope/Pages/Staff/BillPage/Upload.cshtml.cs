@@ -86,11 +86,8 @@ namespace SafeBuilding.Pages
                             decimal parkingFee = Decimal.Parse(reader.GetValue(8).ToString());
                             decimal total = Decimal.Parse(reader.GetValue(9).ToString());
 
-                            
-                            string electicity = reader.GetValue(2).ToString();
-                            string management = reader.GetValue(3).ToString();
-                            string parking = reader.GetValue(4).ToString();
-                            string email = reader.GetValue(5).ToString();
+
+                            string email = reader.GetValue(10).ToString();
 
                             bill = new Bill()
                             {
