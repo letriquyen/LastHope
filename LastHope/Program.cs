@@ -12,6 +12,7 @@ builder.Services.AddScoped<IRentContractRepository, RentContractRepository>();
 builder.Services.AddScoped<IFlatTypeRepository, FlatTypeRepository>();
 builder.Services.AddScoped<ITermRepository, TermRepository>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
+builder.Services.AddScoped<IBillItemRepository, BillItemRepository>();
 builder.Services.AddSession();
 var app = builder.Build();
 
