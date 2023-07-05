@@ -1,0 +1,128 @@
+﻿@page
+@model LastHope.Pages.Chart.IndexModel
+@{
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+<h1 class="display-4" style="text-align:center;">Dashboard</h1>
+<div class="header">
+    <form method="post">
+    <h3 style="text-align:center;">Chart Form</h3>
+        <div class="form-group">
+        <label>Contract Year</label>
+        @if (Model.contractYear == 0)
+        {
+            <input asp-for="@Model.contractYear" type="number" min="2020" max="2050" step="1" value="2023" placeholder="Enter year">
+        }
+        else
+        {
+            <input asp-for="@Model.contractYear" type="number" min="2020" max="2050" step="1" value="@Model.contractYear" placeholder="Enter year">
+        }
+        <span asp-validation-for="@Model.contractYear" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Flats of building</label>
+        <select asp-for="@Model.buildingId">
+            <option selected="selected" value="0">All Buildings</option>
+            @foreach (var item in Model.buildings)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+    <button class="submit btn btn-primary" id="okButton" value="Chart">OK</button>
+</form>
+</div>
+
+<div class="text-center">
+    <canvas id="billTypeChart" style="width:100%;max-width:600px;float: left"></canvas>
+    <canvas id="billChart" style="width:100%;max-width:600px; float: right;"></canvas>
+    <canvas id="contractChart" style="width:100%;max-width:1200px;float: left;margin: 100px auto;"></canvas>
+
+    <script>
+    
+     var xBillTypeValues = ["Unpaid", "Paid"];
+        var yBillTypeValues = [@Model.typeOfBills["Unpaid"],@Model.typeOfBills["Paid"]];
+        var barColorsFlat = [
+            "#b91d47",
+            "#00aba9",
+            "#1e7145"
+        ];
+
+        new Chart("billTypeChart", {
+            type: "pie",
+            data: {
+                labels: xBillTypeValues,
+                datasets: [{
+                    backgroundColor: barColorsFlat,
+                    data: yBillTypeValues
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Bill Type"
+                }
+            }
+        });
+
+    var xBillValues = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var yBillValues = [@Model.bills[1],@Model.bills[2],@Model.bills[3],@Model.bills[4],
+        @Model.bills[5],@Model.bills[6],@Model.bills[7],@Model.bills[8],@Model.bills[9],
+        @Model.bills[10],@Model.bills[11],@Model.bills[12]];
+        var max = @Model.bills.Values.Max();
+        new Chart("billChart", {
+            type: "line",
+            data: {
+                labels: xBillValues,
+                datasets: [{
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "rgba(0,0,255,1.0)",
+                    borderColor: "rgba(0,0,255,0.1)",
+                    data: yBillValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: (@Model.contractYear != 0 ? "Bill in year " + @Model.contractYear : "Bill in year 2023")
+            }    
+            },
+                scales: {
+                    yAxes: [{ ticks: { min: 0, max: max } }]
+                }
+        });
+
+    var xContractValues = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var yContractValues = [@Model.contracts[1],@Model.contracts[2],@Model.contracts[3],@Model.contracts[4],
+        @Model.contracts[5],@Model.contracts[6],@Model.contracts[7],@Model.contracts[8],@Model.contracts[9],
+        @Model.contracts[10],@Model.contracts[11],@Model.contracts[12]];
+        var max = @Model.contracts.Values.Max();
+        new Chart("contractChart", {
+            type: "line",
+            data: {
+                labels: xContractValues,
+                datasets: [{
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "rgba(0,0,255,1.0)",
+                    borderColor: "rgba(0,0,255,0.1)",
+                    data: yContractValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: (@Model.contractYear != 0 ? "Contract signed in year " + @Model.contractYear : "Contract signed in year 2023")
+            }    
+            },
+                scales: {
+                    yAxes: [{ ticks: { min: 0, max: max } }]
+                }
+        });
+    </script>
+</div>

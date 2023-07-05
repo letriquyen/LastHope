@@ -14,7 +14,7 @@ namespace Repository.Models
 
         public int Id { get; set; }
         public int? CustomerId { get; set; }
-        public int? FlatId { get; set; }
+        public int FlatId { get; set; }
         public decimal? Value { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? ExpiryDate { get; set; }

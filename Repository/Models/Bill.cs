@@ -18,7 +18,7 @@ namespace Repository.Models
 
         [Range(0, double.PositiveInfinity, ErrorMessage = "Please enter positive digits")]
         [Required(ErrorMessage = "Please input information")]
-        public int? RentContractId { get; set; }
+        public int RentContractId { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Please input information")]
