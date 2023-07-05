@@ -6,6 +6,11 @@ namespace Repository.Models
 {
     public partial class Flat
     {
+        public Flat()
+        {
+            RentContracts = new HashSet<RentContract>();
+        }
+
         public int Id { get; set; }
         public string? Detail { get; set; }
         public decimal? Price { get; set; }
@@ -16,5 +21,6 @@ namespace Repository.Models
 
         public virtual Building? Building { get; set; }
         public virtual FlatType? FlatType { get; set; }
+        public virtual ICollection<RentContract> RentContracts { get; set; }
     }
 }

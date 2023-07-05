@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Repository.Enum;
 using Repository.Models;
 using Repository.Repository.Interface;
 
@@ -14,37 +15,49 @@ namespace LastHope.Pages.Staff.RentContractPages
     public class EditModel : PageModel
     {
         private readonly IRentContractRepository _rentContractRepository;
-        private readonly IUserAccountRepository _userAccountRepository;
         private readonly IFlatRepository _flatRepository;
         private readonly IBuildingRepository _buildingRepository;
+        private readonly ITermRepository _termRepository;
+        private readonly IUserAccountRepository _userAccountRepository;
 
-        public EditModel(IRentContractRepository rentContractRepository, IUserAccountRepository userAccountRepository,
-            IFlatRepository flatRepository, IBuildingRepository buildingRepository)
+        public EditModel(IRentContractRepository rentContractRepository, IFlatRepository flatRepository,
+            IBuildingRepository buildingRepository, ITermRepository termRepository,
+            IUserAccountRepository userAccountRepository)
         {
             _rentContractRepository = rentContractRepository;
-            _userAccountRepository = userAccountRepository;
             _flatRepository = flatRepository;
             _buildingRepository = buildingRepository;
+            _termRepository = termRepository;
+            _userAccountRepository = userAccountRepository;
         }
 
         [BindProperty]
         public RentContract RentContract { get; set; } = default!;
-
-        public IActionResult OnGet(int? id)
+        [BindProperty]
+        public int? BuildingId { get; set; }
+       
+        [BindProperty]
+        public List<Term> Terms { get; set; }
+        public IActionResult OnGet(int? id, int? BuildingId)
         {
             if (id == null || _rentContractRepository.Get() == null)
             {
                 return NotFound();
             }
-
+            
             var rentcontract = _rentContractRepository.Get(id.Value);
             if (rentcontract == null)
             {
                 return NotFound();
             }
             RentContract = rentcontract;
-            ViewData["CustomerId"] = new SelectList(_userAccountRepository.Get(), "Id", "Fullname");
-            ViewData["BuildingId"] = new SelectList(_buildingRepository.Get(), "Id", "Name");
+            if (BuildingId == null)
+            {
+                this.BuildingId = RentContract.Flat.BuildingId;
+            }
+            else this.BuildingId = BuildingId;
+            Terms = RentContract.Terms.ToList();
+            LoadData(RentContract);
             return Page();
         }
 
@@ -60,6 +73,7 @@ namespace LastHope.Pages.Staff.RentContractPages
 
             try
             {
+                _termRepository.Update(Terms);
                 _rentContractRepository.Update(RentContract);
             }
             catch (DbUpdateConcurrencyException)
@@ -81,5 +95,16 @@ namespace LastHope.Pages.Staff.RentContractPages
         {
             return _rentContractRepository.Get(id) != null;
         }
+        private void LoadData(RentContract contract)
+        {
+            ViewData["CustomerId"] = new SelectList(_userAccountRepository.Get(), "Id", "Fullname", contract.CustomerId);
+            ViewData["BuildingId"] = new SelectList(_buildingRepository.Get(), "Id", "Name", contract.Flat.BuildingId);
+            var flats = _flatRepository.GetByBuilding(BuildingId.Value);
+            var statuses = Enum.GetValues(typeof(RentContractStatus)).Cast<RentContractStatus>().ToList();
+            ViewData["Status"] = new SelectList(statuses.Select((value, index) => new { value, index }), "index", "value", contract.Status);
+            ViewData["FlatId"] = new SelectList(flats, "Id", "RoomNumber", contract.Flat.RoomNumber);
+        }
+
+    
     }
 }

@@ -10,6 +10,7 @@ builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IFlatRepository, FlatRepository>();
 builder.Services.AddScoped<IRentContractRepository, RentContractRepository>();
 builder.Services.AddScoped<IFlatTypeRepository, FlatTypeRepository>();
+builder.Services.AddScoped<ITermRepository, TermRepository>();
 builder.Services.AddSession();
 var app = builder.Build();
 

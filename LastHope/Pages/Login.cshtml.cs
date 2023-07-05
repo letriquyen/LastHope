@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Repository.Enum;
 using Repository.Repository.Implement;
 using Repository.Repository.Interface;
 
@@ -10,26 +11,29 @@ namespace LastHope.Pages
         public IUserAccountRepository _repository = new UserAccountRepository();
         [BindProperty]
         public string Phone { get; set; }
+        [BindProperty]
         public string Password { get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            HttpContext.Session.Clear();
+            return Page();
         }
         public IActionResult OnPost()
         {
             var account = _repository.Login(Phone, Password);
             if (account != null)
             {
-                HttpContext.Session.SetInt32("Role", account.RoleUser);
+                HttpContext.Session.SetInt32("Role", (int)account.RoleUser);
                 HttpContext.Session.SetInt32("Id", account.Id);
                 switch (account.RoleUser)
                 {
-                    case 0:
+                    case Role.ADMIN:
                         return RedirectToPage("Admin/Index"); // tuong trung
                         
-                    case 1:
-                        return RedirectToPage("Staff/Building/Index");
+                    case Role.STAFF:
+                        return RedirectToPage("/Staff/BuildingPages/Index");
                         
-                    case 2:
+                    case Role.CUSTOMER:
                         return RedirectToPage("Customer/Index");
                         
                 }
@@ -38,5 +42,7 @@ namespace LastHope.Pages
             ViewData["Message"] = "Wrong phone or password!";
             return Page();
         }
+
+        
     }
 }

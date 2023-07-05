@@ -49,7 +49,7 @@ Create Table RentContract (
 	StartDate Date,
 	ExpiryDate Date,
 	[Status] int,
-	Contract nvarchar(100),
+	Contract nvarchar(MAX),
 	Title nvarchar(200),
 )
 

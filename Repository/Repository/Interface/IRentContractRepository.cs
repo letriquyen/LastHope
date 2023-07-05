@@ -9,7 +9,7 @@ namespace Repository.Repository.Interface
 {
     public interface IRentContractRepository
     {
-        bool Add(RentContract rentContract);
+        RentContract? Add(RentContract rentContract);
         bool Update(RentContract rentContract); 
         List<RentContract> Get();
         RentContract? Get(int id);
