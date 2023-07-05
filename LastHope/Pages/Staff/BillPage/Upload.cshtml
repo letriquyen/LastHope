@@ -1,0 +1,25 @@
+﻿@page "/Upload"
+@using Repository.Models;
+@model UploadModel
+@{
+    ViewData["Title"] = "Upload";
+}
+
+<div class="text-center">
+    <h1 class="display-4">File Upload</h1>
+</div>
+<div>
+    <div class="mb-3 mt-3">
+        <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+            <div class="mb-3">
+                <label class="form-label">UploadFile</label>
+                <input type="file" name="file" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <button type="submit" class=" btn btn-primary">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
