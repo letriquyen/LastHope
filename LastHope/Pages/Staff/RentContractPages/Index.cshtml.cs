@@ -22,14 +22,14 @@ namespace LastHope.Pages.Staff.RentContractPages
 
         public IList<RentContract> RentContract { get;set; } = default!;
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
             {
                 return Redirect("/");
             }
             RentContract = _rentContractRepository.Get();
-            
+            return Page();
         }
         
       

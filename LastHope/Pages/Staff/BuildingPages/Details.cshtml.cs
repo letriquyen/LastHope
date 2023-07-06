@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Repository.Enum;
 using Repository.Models;
 using Repository.Repository.Interface;
 
@@ -23,6 +24,10 @@ namespace LastHope.Pages.Staff.BuildingPages
 
         public IActionResult OnGet(int? id)
         {
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
+            {
+                return Redirect("/");
+            }
             if (id == null || _buildingRepository.Get() == null)
             {
                 return NotFound();

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Repository.Enum;
 using Repository.Models;
 using Repository.Repository.Interface;
 
@@ -26,6 +27,10 @@ namespace LastHope.Pages.Staff.FlatPages
 
         public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
+            {
+                return Redirect("/");
+            }
             ViewData["BuildingId"] = new SelectList(_buildingRepository.Get(), "Id", "Name");
             ViewData["FlatTypeId"] = new SelectList(_flatTypeRepository.Get(), "Id", "Name");
             return Page();

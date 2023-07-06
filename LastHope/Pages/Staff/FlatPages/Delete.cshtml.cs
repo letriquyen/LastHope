@@ -21,10 +21,14 @@ namespace LastHope.Pages.Staff.FlatPages
         }
 
         [BindProperty]
-      public Flat Flat { get; set; } = default!;
+        public Flat Flat { get; set; } = default!;
 
         public IActionResult OnGet(int? id)
         {
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
+            {
+                return Redirect("/");
+            }
             if (id == null || _flatRepository.Get() == null)
             {
                 return NotFound();

@@ -24,6 +24,10 @@ namespace LastHope.Pages.Staff.BuildingPages
 
         public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
+            {
+                return Redirect("/");
+            }
             var statuses = Enum.GetValues(typeof(BuildingStatus)).Cast<BuildingStatus>().ToList();
             ViewData["Status"] = new SelectList(statuses.Select((value, index) => new { value, index }), "index", "value");
             

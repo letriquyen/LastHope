@@ -40,6 +40,10 @@ namespace LastHope.Pages.Staff.RentContractPages
         public List<Term> Terms { get; set; }
         public IActionResult OnGet(int? id, int? BuildingId)
         {
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
+            {
+                return Redirect("/");
+            }
             if (id == null || _rentContractRepository.Get() == null)
             {
                 return NotFound();

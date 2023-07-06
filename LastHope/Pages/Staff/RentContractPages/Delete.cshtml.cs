@@ -21,10 +21,14 @@ namespace LastHope.Pages.Staff.RentContractPages
         }
 
         [BindProperty]
-      public RentContract RentContract { get; set; } = default!;
+        public RentContract RentContract { get; set; } = default!;
 
         public IActionResult OnGet(int? id)
         {
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
+            {
+                return Redirect("/");
+            }
             if (id == null || _rentContractRepository.Get() == null)
             {
                 return NotFound();

@@ -35,6 +35,10 @@ namespace LastHope.Pages.Staff.RentContractPages
 
         public IActionResult OnGet(int? BuildingId)
         {
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
+            {
+                return Redirect("/");
+            }
             this.BuildingId = BuildingId;
             LoadData(BuildingId);
 
