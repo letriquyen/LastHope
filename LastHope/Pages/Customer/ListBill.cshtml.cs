@@ -32,8 +32,10 @@ namespace LastHope.Pages.Customer
             {
                 return Redirect("/");
             }
-            Bill = _billRepository.Get();
-            NewBill = _billRepository.GetNewBillList();
+            var id = HttpContext.Session.GetInt32("Id");
+            Bill = _billRepository.GetBillByCustomerID((int)id);
+            //Bill = _billRepository.Get();
+            NewBill = _billRepository.GetNewBillList((int)id);
             return Page();
         }
     }
