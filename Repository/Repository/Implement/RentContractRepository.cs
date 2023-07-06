@@ -60,6 +60,20 @@ namespace Repository.Repository.Implement
                 .Include(c => c.Customer)
                 .ToList();
         }
+
+        public List<RentContract> Get(int customerId, int recordPerPage, int pageNumber, out int totalPage)
+        {
+            totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Count() / recordPerPage);
+            return _context.RentContracts
+                .Where(c => c.CustomerId == customerId)
+                .OrderByDescending(c => c.StartDate)
+                .Skip(recordPerPage * (pageNumber - 1))
+                .Take(recordPerPage)
+                .Include(c => c.Flat.Building)
+                .Include(c => c.Customer)
+                .ToList();
+        }
+
         public List<RentContract> Search(string name, int recordPerPage, int pageNumber, out int totalPage)
         {
             totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Count() / recordPerPage);

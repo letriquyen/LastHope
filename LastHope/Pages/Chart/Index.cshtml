@@ -1,6 +1,14 @@
 ﻿@page
+@using Repository.Enum
 @model LastHope.Pages.Chart.IndexModel
 @{
+    var role = HttpContext.Session.GetInt32("Role");
+    if (role == (int)Role.ADMIN)
+    {
+        Layout = "_Layout";
+    }
+    else if (role == (int)Role.STAFF)
+        Layout = "_LayoutStaff";
 }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">

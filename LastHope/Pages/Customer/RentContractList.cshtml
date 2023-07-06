@@ -1,0 +1,113 @@
+﻿@page
+@model LastHope.Pages.Customer.RentContractListModel
+
+@{
+    ViewData["Title"] = "RentContractList";
+    Layout = "_LayoutCustomer";
+}
+
+<h1>RentContractList</h1>
+
+@if (Model.RentContract != null && Model.RentContract.Count > 0)
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentContract[0].Flat.Building)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentContract[0].Flat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentContract[0].Customer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentContract[0].Title)
+                </th>
+                <th>
+                    Duration
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentContract[0].Value)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentContract[0].Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentContract[0].Contract)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.RentContract)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Flat.Building.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Flat.RoomNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.Fullname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+
+                    <td>
+                        @{
+                            var startDate = item.StartDate.Value.ToString("dd/MM/yyyy");
+                            var expiryDate = item.ExpiryDate.Value.ToString("dd/MM/yyyy");
+                            var value = (int)item.Value.Value;
+                        }
+                        From
+                        @Html.DisplayFor(modelItem => startDate)
+                        to
+                        @Html.DisplayFor(modelItem => expiryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => value) VNĐ
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        <a href="data:application/octet-stream;base64,@item.Contract" download="@item.Customer.Fullname .pdf">Download File</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="flex-container group-btn">
+
+        <form method="post">
+            <input type="hidden" asp-for="CurrentPage" />
+            <input type="hidden" asp-for="TotalPage" />
+            <input type="hidden" asp-for="Search" />
+            <input name="Page" value="@Model.CurrentPage" type="hidden" />
+            <div class="group-btn">
+                @if (Model.CurrentPage > 1)
+                {
+                    <button type="submit" class="btn btn-primary" value="Previous" asp-page-handler="Previous">Previous</button>
+                }
+                Page: @Model.CurrentPage
+                @if (Model.TotalPage > Model.CurrentPage)
+                {
+                    <button type="submit" class="btn btn-primary" value="Next" asp-page-handler="Next">Next</button>
+                }
+            </div>
+
+
+        </form>
+
+    </div>
+} else
+{
+    <p>No contract to display</p>
+}

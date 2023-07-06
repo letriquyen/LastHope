@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Repository.Enum;
 using Repository.Models;
 using Repository.Repository.Implement;
 using Repository.Repository.Interface;
@@ -24,9 +25,9 @@ namespace LastHope.Pages.Chart
 
         public async Task<IActionResult> OnGet()
         {
-            if (HttpContext.Session.GetString("Role") == null)
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") == (int)Role.CUSTOMER)
             {
-                return RedirectToPage("/Login");
+                return Redirect("/");
             }
             buildings = _buildingRepository.Get();
 

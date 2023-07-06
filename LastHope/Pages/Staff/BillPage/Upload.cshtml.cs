@@ -11,6 +11,7 @@ using MailKit.Net.Smtp;
 using System.Diagnostics.Metrics;
 using Repository.Repository.Interface;
 using Repository.Enum;
+using OfficeOpenXml;
 
 namespace LastHope.Pages.Staff.BillPage
 {
@@ -153,6 +154,34 @@ namespace LastHope.Pages.Staff.BillPage
             return list;
         }
 
-       
+        public IActionResult OnGetExportToExcel()
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            var stream = new MemoryStream();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var ws = package.Workbook.Worksheets.Add("Sheet1");
+                ws.Cells["A1"].Value = "Issued Date (dd/mm/yyyy):";
+                ws.Cells["B1"].Value = DateTime.Now.ToString("dd/MM/yyyy");
+                ws.Cells["A2"].Value = "BuildingId";
+                ws.Cells["B2"].Value = "BuildingName";
+                ws.Cells["C2"].Value = "RoomNumber";
+                ws.Cells["D2"].Value = "ContractId";
+                ws.Cells["E2"].Value = "Rent Fee";
+                ws.Cells["F2"].Value = "Electricity Fee";
+                ws.Cells["G2"].Value = "Water Fee";
+                ws.Cells["H2"].Value = "Management Fee";
+                ws.Cells["I2"].Value = "Parking Fee";
+                ws.Cells["J2"].Value = "Email";
+                ws.Cells["A:AZ"].AutoFitColumns();
+                package.Save();
+            }
+            stream.Position = 0;
+            string excelName = "MonthlyBill.xlsx";
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
+
     }
 }
