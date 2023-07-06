@@ -52,11 +52,11 @@
                 <input asp-for="Bill.Content" class="form-control" />
                 <span asp-validation-for="Bill.Content" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 <label asp-for="Bill.Type" class="control-label"></label>
-                <input asp-for="Bill.Type" class="form-control" />
+                 <select asp-for="Bill.Type" class ="form-control" asp-items="ViewBag.TypeList"></select>
                 <span asp-validation-for="Bill.Type" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

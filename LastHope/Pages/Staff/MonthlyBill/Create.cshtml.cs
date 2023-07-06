@@ -34,6 +34,11 @@ namespace LastHope.Pages.Staff.MonthlyBill
                 new SelectListItem { Value = "0", Text = "Not paid" },
                 new SelectListItem { Value = "1", Text = "Paid" }
             }, "Value", "Text", 0);
+            ViewData["TypeList"] = new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Value = "0", Text = "Deposit Bill" },
+                new SelectListItem { Value = "1", Text = "Monthly Bill" }
+            }, "Value", "Text", 1);
             return Page();
         }
 

@@ -40,9 +40,14 @@ namespace Repository.Repository.Implement
             return _context.SaveChanges() > 0;
         }
 
-        public List<Bill> GetNewBillList()
+        public List<Bill> GetNewBillList(int id)
         {
-            return _context.Bills.Where(b => b.Status == 0).ToList();
+            return _context.Bills.Where(b => b.Status == 0 && b.RentContract.CustomerId == id).ToList();
+        }
+
+        public List<Bill> GetBillByCustomerID(int id)
+        {
+            return _context.Bills.Where(b => b.RentContract.CustomerId == id).ToList();
         }
 
         public bool UpdateStatus(Bill bill)
