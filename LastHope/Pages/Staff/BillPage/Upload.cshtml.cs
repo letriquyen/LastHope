@@ -19,25 +19,23 @@ namespace LastHope.Pages.Staff.BillPage
     {
 
         private readonly IBillRepository _billRepository;
-        private readonly IFlatRepository _flatRepository;
         private readonly IRentContractRepository _rentContractRepository;
-        private readonly IUserAccountRepository _userAccountRepository;
+        
+
 
         private readonly IBillItemRepository _billItemRepository;
         public IEnumerable<Bill> Bills { get; set; }
 
         private readonly ILogger<UploadModel> _logger;
 
-        public UploadModel(ILogger<UploadModel> logger, IBillRepository billRepository, IBillItemRepository billItemRepository, IFlatRepository flatRepository, IRentContractRepository rentContractRepository, IUserAccountRepository userAccountRepository)
+        public UploadModel(IBillRepository billRepository, IRentContractRepository rentContractRepository, 
+            IBillItemRepository billItemRepository, ILogger<UploadModel> logger)
         {
-            _logger = logger;
             _billRepository = billRepository;
-            _billItemRepository = billItemRepository;
-            _flatRepository = flatRepository;
             _rentContractRepository = rentContractRepository;
-            _userAccountRepository = userAccountRepository;
+            _billItemRepository = billItemRepository;
+            _logger = logger;
         }
-
 
         public IActionResult OnGet()
         {
@@ -65,7 +63,7 @@ namespace LastHope.Pages.Staff.BillPage
                 fileStream.Flush();
             }
             var invoice = this.GetBillList(file.FileName);
-            ViewData["Message"] = "Create bills and send successfully!";
+            ViewData["Message"] = "Create bills and send email successfully!";
             return Page();
         }
 
@@ -110,12 +108,6 @@ namespace LastHope.Pages.Staff.BillPage
                                 Sender = "Staff",
                                 Receiver = "Customer",
                                 Type = BillType.BILL
-                                //rent = reader.GetValue(0).ToString(),
-                                //water = reader.GetValue(1).ToString(),
-                                //electicity = reader.GetValue(2).ToString(),
-                                //management = reader.GetValue(3).ToString(),
-                                //parking = reader.GetValue(4).ToString(),
-                                //email = reader.GetValue(5).ToString()
                             };
                             bill = _billRepository.AddBill(bill);
                             for (int j = 4; j < 9; j++)
@@ -197,6 +189,10 @@ namespace LastHope.Pages.Staff.BillPage
                     ws.Cells[collumn].Value = listContract[i - 3].Value;
                     collumn = "J" + i;
                     ws.Cells[collumn].Value = listContract[i - 3].Customer.Email;
+                    collumn = "H" + i;
+                    ws.Cells[collumn].Value = 400000;
+                    collumn = "I" + i;
+                    ws.Cells[collumn].Value = 200000;
                 }
                
                 
