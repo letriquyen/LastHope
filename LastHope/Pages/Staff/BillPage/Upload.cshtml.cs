@@ -34,9 +34,9 @@ namespace LastHope.Pages.Staff.BillPage
 
         public IActionResult OnGet()
         {
-            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") == 2)
+            if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
             {
-                return RedirectToPage("Pages/Login");
+                return Redirect("/");
             }
             return Page();
         }
@@ -152,5 +152,7 @@ namespace LastHope.Pages.Staff.BillPage
             }
             return list;
         }
+
+       
     }
 }
