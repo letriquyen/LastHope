@@ -29,6 +29,7 @@ namespace Repository.Repository.Implement
         public List<RentContract> Get()
         {
             return _context.RentContracts
+                .OrderByDescending(c => c.StartDate)
                 .Include(c => c.Flat.Building)
                 .Include(c => c.Customer)
                 .ToList();
@@ -43,6 +44,29 @@ namespace Repository.Repository.Implement
                 .FirstOrDefault(rc => rc.Id == id);
         }
 
+        public List<RentContract> Get(int recordPerPage, int pageNumber, out int totalPage)
+        {
+            totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Count() / recordPerPage);
+            return _context.RentContracts
+                .OrderByDescending(c => c.StartDate)
+                .Skip(recordPerPage * (pageNumber - 1))
+                .Take(recordPerPage)
+                .Include(c => c.Flat.Building)
+                .Include(c => c.Customer)
+                .ToList();
+        }
+        public List<RentContract> Search(string name, int recordPerPage, int pageNumber, out int totalPage)
+        {
+            totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Count() / recordPerPage);
+            return _context.RentContracts
+                .Where(c => c.Customer.Fullname.Contains(name))
+                .OrderByDescending(c => c.StartDate)
+                .Skip(recordPerPage * (pageNumber - 1))
+                .Take(recordPerPage)
+                .Include(c => c.Flat.Building)
+                .Include(c => c.Customer)
+                .ToList();
+        }
         public bool Update(RentContract rentContract)
         {
             _context.RentContracts.Update(rentContract);

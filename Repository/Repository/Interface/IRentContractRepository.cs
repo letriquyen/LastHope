@@ -13,6 +13,8 @@ namespace Repository.Repository.Interface
         RentContract? Add(RentContract rentContract);
         bool Update(RentContract rentContract); 
         List<RentContract> Get();
+        List<RentContract> Get(int recordPerPage, int pageNumber, out int totalPage);
+        List<RentContract> Search(string name, int recordPerPage, int pageNumber, out int totalPage);
         RentContract? Get(int id);
     }
 }

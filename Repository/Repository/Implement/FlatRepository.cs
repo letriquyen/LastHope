@@ -39,6 +39,17 @@ namespace Repository.Repository.Implement
                 .ToList();
         }
 
+        public List<Flat> Get(int recordPerPage, int pageNumber, out int totalPage)
+        {
+            totalPage = (int)Math.Ceiling(1.0 * _context.Flats.Count() / recordPerPage);
+            return _context.Flats
+                .Skip(recordPerPage * (pageNumber - 1))
+                .Take(recordPerPage)                
+                .Include(f => f.Building)
+                .Include(f => f.FlatType)
+                .ToList();
+        }
+
         public List<Flat> GetByBuilding(int buildingId)
         {
             return _context.Flats

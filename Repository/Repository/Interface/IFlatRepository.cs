@@ -13,6 +13,7 @@ namespace Repository.Repository.Interface
         bool Update(Flat flat);
         Flat? Get(int id);
         List<Flat> Get();
+        List<Flat> Get(int recordPerPage, int pageNumber, out int totalPage);
         List<Flat> GetByBuilding(int buildingId);
     }
 }
