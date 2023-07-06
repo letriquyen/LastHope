@@ -15,7 +15,9 @@ namespace Repository.Repository.Interface
         Bill AddBill(Bill bill);
         List<Bill> Get();
 
-        List<Bill> GetNewBillList();
+        List<Bill> GetNewBillList(int id);
+
+        List<Bill> GetBillByCustomerID(int id);
 
         bool UpdateStatus(Bill bill);
     }

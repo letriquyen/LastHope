@@ -35,6 +35,11 @@ namespace Repository.Repository.Implement
                 .ToList();
         }
 
+        public List<RentContract> GetAll()
+        {
+            return _context.RentContracts.ToList();
+        }
+
         public RentContract? Get(int id)
         {
             return _context.RentContracts

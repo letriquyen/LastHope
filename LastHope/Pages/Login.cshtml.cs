@@ -34,7 +34,7 @@ namespace LastHope.Pages
                         return RedirectToPage("/Staff/BuildingPages/Index");
                         
                     case Role.CUSTOMER:
-                        return RedirectToPage("Customer/Index");
+                        return RedirectToPage("Customer/ListBill");
                         
                 }
 
