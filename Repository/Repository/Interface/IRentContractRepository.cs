@@ -14,6 +14,7 @@ namespace Repository.Repository.Interface
         bool Update(RentContract rentContract); 
         List<RentContract> Get();
         List<RentContract> Get(int recordPerPage, int pageNumber, out int totalPage);
+        List<RentContract> Get(int customerId, int recordPerPage, int pageNumber, out int totalPage);
         List<RentContract> Search(string name, int recordPerPage, int pageNumber, out int totalPage);
         RentContract? Get(int id);
     }
