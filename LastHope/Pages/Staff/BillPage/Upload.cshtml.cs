@@ -19,17 +19,23 @@ namespace LastHope.Pages.Staff.BillPage
     {
 
         private readonly IBillRepository _billRepository;
+        private readonly IFlatRepository _flatRepository;
+        private readonly IRentContractRepository _rentContractRepository;
+        private readonly IUserAccountRepository _userAccountRepository;
 
         private readonly IBillItemRepository _billItemRepository;
         public IEnumerable<Bill> Bills { get; set; }
 
         private readonly ILogger<UploadModel> _logger;
 
-        public UploadModel(ILogger<UploadModel> logger, IBillRepository billRepository, IBillItemRepository billItemRepository)
+        public UploadModel(ILogger<UploadModel> logger, IBillRepository billRepository, IBillItemRepository billItemRepository, IFlatRepository flatRepository, IRentContractRepository rentContractRepository, IUserAccountRepository userAccountRepository)
         {
             _logger = logger;
             _billRepository = billRepository;
             _billItemRepository = billItemRepository;
+            _flatRepository = flatRepository;
+            _rentContractRepository = rentContractRepository;
+            _userAccountRepository = userAccountRepository;
         }
 
 
@@ -156,6 +162,7 @@ namespace LastHope.Pages.Staff.BillPage
 
         public IActionResult OnGetExportToExcel()
         {
+            List<RentContract> listContract = _rentContractRepository.GetAllValidContract();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var stream = new MemoryStream();
 
@@ -174,6 +181,25 @@ namespace LastHope.Pages.Staff.BillPage
                 ws.Cells["H2"].Value = "Management Fee";
                 ws.Cells["I2"].Value = "Parking Fee";
                 ws.Cells["J2"].Value = "Email";
+                for (int i = 3; i < listContract.Count()+3;i++)
+                {
+                    string collumn;
+                   
+                    collumn = "A" + i;
+                    ws.Cells[collumn].Value = listContract[i - 3].Flat.BuildingId;
+                    collumn = "B" + i;
+                    ws.Cells[collumn].Value = listContract[i - 3].Flat.Building.Name;
+                    collumn = "C" + i;
+                    ws.Cells[collumn].Value = listContract[i - 3].Flat.RoomNumber;
+                    collumn = "D" + i;
+                    ws.Cells[collumn].Value = listContract[i - 3].Id;
+                    collumn = "E" + i;
+                    ws.Cells[collumn].Value = listContract[i - 3].Value;
+                    collumn = "J" + i;
+                    ws.Cells[collumn].Value = listContract[i - 3].Customer.Email;
+                }
+               
+                
                 ws.Cells["A:AZ"].AutoFitColumns();
                 package.Save();
             }

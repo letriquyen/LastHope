@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Repository.Enum;
 using Repository.Models;
 using Repository.Repository.Interface;
 using System;
@@ -90,6 +91,14 @@ namespace Repository.Repository.Implement
         {
             _context.RentContracts.Update(rentContract);
             return _context.SaveChanges() > 0;
+        }
+
+        public List<RentContract> GetAllValidContract()
+        {
+            return _context.RentContracts.Where(x=>x.Status.Equals(RentContractStatus.VALID))
+                .Include(x => x.Flat.Building)
+                .Include(x => x.Customer)
+                .ToList();
         }
     }
 }

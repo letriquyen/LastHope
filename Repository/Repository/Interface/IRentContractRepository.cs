@@ -15,6 +15,7 @@ namespace Repository.Repository.Interface
         List<RentContract> Get();
 
         List<RentContract> GetAll();
+        List<RentContract> GetAllValidContract();
         List<RentContract> Get(int recordPerPage, int pageNumber, out int totalPage);
         List<RentContract> Get(int customerId, int recordPerPage, int pageNumber, out int totalPage);
         List<RentContract> Search(string name, int recordPerPage, int pageNumber, out int totalPage);
