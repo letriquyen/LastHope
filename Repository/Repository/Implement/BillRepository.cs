@@ -15,16 +15,13 @@ namespace Repository.Repository.Implement
         public BillRepository()
         {
         }
-        public bool Add(Bill bill, List<BillItem> billItems)
+        public Bill Add(Bill bill)
         {
             EntityEntry<Bill> billEntry = _context.Bills.Add(bill);
+            _context.SaveChanges();
             bill = billEntry.Entity;
-            foreach (BillItem item in billItems)
-            {
-                item.BillId = bill.Id;
-                _context.BillItems.Add(item);
-            }
-            return _context.SaveChanges() > 0;
+            
+            return bill;
         }
 
         public Bill? Get(int id)

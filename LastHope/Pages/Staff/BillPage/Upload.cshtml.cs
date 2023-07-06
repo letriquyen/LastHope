@@ -18,15 +18,16 @@ namespace SafeBuilding.Pages
 
         private readonly IBillRepository _billRepository;
 
-
+        private readonly IBillItemRepository _billItemRepository;
         public IEnumerable<Bill> Bills { get; set; }
 
         private readonly ILogger<UploadModel> _logger;
 
-        public UploadModel(ILogger<UploadModel> logger, IBillRepository billRepository)
+        public UploadModel(ILogger<UploadModel> logger, IBillRepository billRepository, IBillItemRepository billItemRepository)
         {
             _logger = logger;
             _billRepository = billRepository;
+            _billItemRepository = billItemRepository;
         }
 
 
@@ -103,19 +104,21 @@ namespace SafeBuilding.Pages
                                 //parking = reader.GetValue(4).ToString(),
                                 //email = reader.GetValue(5).ToString()
                             };
-
+                            bill = _billRepository.Add(bill);
                             for (int j = 4; j < 9; j++)
                             {
                                 item = new BillItem
                                 {
                                     ServiceId = (int)(j-3),
                                     Quantity = 1,
-                                    Value = Decimal.Parse(reader.GetValue(j).ToString())
+                                    Value = Decimal.Parse(reader.GetValue(j).ToString()),
+                                    BillId = bill.Id
                                 };
+                                _billItemRepository.Add(item);
                                 items.Add(item);
                             }
 
-                            _billRepository.Add(bill, items);
+                            
                             string mainBody = "<tr>" +
                                                     "<th>" + reader.GetValue(4).ToString() + "</th>" +
                                                     "<th>" + reader.GetValue(5).ToString() + "</th>" +

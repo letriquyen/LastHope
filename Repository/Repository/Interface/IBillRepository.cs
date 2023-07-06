@@ -9,7 +9,7 @@ namespace Repository.Repository.Interface
 {
     public interface IBillRepository
     { 
-        bool Add(Bill bill, List<BillItem> billItems);
+        Bill Add(Bill bill);
         bool Update(Bill bill);
         Bill? Get(int id);
         List<Bill> Get();
