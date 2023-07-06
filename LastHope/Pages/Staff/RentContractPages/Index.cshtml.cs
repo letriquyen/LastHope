@@ -31,7 +31,7 @@ namespace LastHope.Pages.Staff.RentContractPages
         public int Page { get; set; }
         [BindProperty]
         public string Search { get; set; }
-        public readonly int RecordPerPage = 2;
+        public readonly int RecordPerPage = 5;
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)

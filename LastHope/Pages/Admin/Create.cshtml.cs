@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Repository.Enum;
 using Repository.Models;
 using Repository.Repository.Implement;
 using Repository.Repository.Interface;
@@ -17,6 +18,8 @@ namespace LastHope.Pages.Admin
 
         public IActionResult OnGet()
         {
+            var roles = Enum.GetValues(typeof(Role)).Cast<Role>().ToList();
+            ViewData["Role"] = new SelectList(roles.Select((value, index) => new { value, index }), "index", "value");
             return Page();
         }
 
@@ -29,9 +32,10 @@ namespace LastHope.Pages.Admin
         {
           if (!ModelState.IsValid || _userAccountRepository.Get() == null || UserAccount == null)
             {
+                var roles = Enum.GetValues(typeof(Role)).Cast<Role>().ToList();
+                ViewData["Roles"] = new SelectList(roles.Select((value, index) => new { value, index }), "index", "value");
                 return Page();
             }
-
             _userAccountRepository.Create(UserAccount);
 
             return RedirectToPage("./Index");

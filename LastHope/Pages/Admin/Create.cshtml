@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserAccount.DayOfBirth" class="control-label"></label>
-                <input asp-for="UserAccount.DayOfBirth" class="form-control" />
+                <input type="date" asp-for="UserAccount.DayOfBirth" class="form-control" />
                 <span asp-validation-for="UserAccount.DayOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -56,7 +56,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserAccount.DateJoin" class="control-label"></label>
-                <input asp-for="UserAccount.DateJoin" class="form-control" />
+                <input type="date" asp-for="UserAccount.DateJoin" class="form-control" />
                 <span asp-validation-for="UserAccount.DateJoin" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -66,7 +66,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserAccount.RoleUser" class="control-label"></label>
-                <select asp-for="UserAccount.RoleUser" class="form-control"></select>
+                <select asp-for="UserAccount.RoleUser" class="form-control" asp-items="ViewBag.Role"></select>
                 <span asp-validation-for="UserAccount.RoleUser" class="text-danger"></span>
             </div>
             <div class="form-group">
