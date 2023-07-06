@@ -1,0 +1,89 @@
+﻿@page
+@model LastHope.Pages.Admin.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_Layout";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>UserAccount</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.Fullname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.Fullname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.DayOfBirth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.DayOfBirth)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.CitizenId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.CitizenId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.DateJoin)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.DateJoin)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserAccount.RoleUser)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserAccount.RoleUser)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="UserAccount.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

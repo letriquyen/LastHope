@@ -20,14 +20,18 @@ namespace LastHope.Pages.Staff.MonthlyBill
             _billRepository = billRepository;
             _rentContractRepository = rentContractRepository;
         }
+        List<int> statusList = new List<int> { 0, 1 };
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public Bill Bill { get; set; } = default!;
+
+        public IActionResult OnGet(int id)
         {
             if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
             {
                 return Redirect("/");
             }
-            ViewData["RentContractId"] = new SelectList(_rentContractRepository.Get(), "Id", "Id");
+            Bill.RentContractId = id;
             //ViewData["StatusList"] = new SelectList(statusList, "Id", "Id");
             ViewData["StatusList"] = new SelectList(new List<SelectListItem>
             {
@@ -36,11 +40,6 @@ namespace LastHope.Pages.Staff.MonthlyBill
             }, "Value", "Text", 0);
             return Page();
         }
-
-        List<int> statusList = new List<int> { 0, 1 };
-
-        [BindProperty]
-        public Bill Bill { get; set; } = default!;
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

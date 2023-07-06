@@ -11,5 +11,10 @@ namespace Repository.Repository.Interface
     {
         UserAccount Login(string phone, string password);
         List<UserAccount> Get();
+        UserAccount Get(int id);
+        bool UserAccountExists(int id);
+        bool Update(UserAccount account);
+        bool Delete(UserAccount account);
+        bool Create(UserAccount account);
     }
 }
