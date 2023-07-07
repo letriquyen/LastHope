@@ -5,6 +5,7 @@
     ViewData["Title"] = "Create";
     Layout = "_LayoutStaff";
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     .building{
         display:flex;
@@ -69,25 +70,19 @@
                 <input type="file" accept=".pdf" asp-for="ContractFile" class="form-control" />
                 <span asp-validation-for="RentContract.Contract" class="text-danger"></span>
             </div>
-            <div>Terms</div>
-            @for (int i = 0; i < 2; i++)
-            {
-                <div>
-                    <div class="form-group">
-                        <label>Title</label>
-                        <input asp-for="Terms[i].Title" class="form-control" />
-                        <span asp-validation-for="Terms[i].Title" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Content</label>
-                        <input asp-for="Terms[i].Content" class="form-control" />
-                        <span asp-validation-for="Terms[i].Content" class="text-danger"></span>
-                    </div>
-                    ----------------------------------------------------------------
-                </div>
-                
+            <div class="building">
+                Terms 
+                <button id="addItemButton">Add Term</button>
+                <button id="removeItemButton">Remove Last</button>
+            </div>
+            @{
+                var i = 0;
             }
+            <div id="itemList">
+                
+            </div>
 
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -103,3 +98,35 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 }
+<script>
+$(document).ready(function() {
+    var itemIndex = 0;
+    $("#removeItemButton").click(function () {
+        if (itemIndex >= 1) {
+            itemIndex--;
+            $("#itemList > div:nth-last-child(-n+2)").remove();
+            
+        } 
+    });
+    $("#addItemButton").click(function() {
+        var newItemHtml = `
+            <div class="form-group">
+                <label>Title</label>
+                <input asp-for="Terms[${itemIndex}].Title" class="form-control" />
+                <span asp-validation-for="Terms[${itemIndex}].Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <input asp-for="Terms[${itemIndex}].Content" class="form-control" />
+                <span asp-validation-for="Terms[${itemIndex}].Content" class="text-danger"></span>
+                ----------------------------------------------------------------
+            </div>
+            
+        `;
+
+        $("#itemList").append(newItemHtml);
+
+        itemIndex++;
+    });
+});
+</script>

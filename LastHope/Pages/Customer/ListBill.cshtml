@@ -76,15 +76,15 @@
                 @Html.DisplayFor(modelItem => item.Value)
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.Status)*@
-                @if (item.Status == 0)
+                @Html.DisplayFor(modelItem => item.Status)
+                @*@if (item.Status == 0)
                 {
                     <span>Not paid</span>
                 }
                 else if (item.Status == 1)
                 {
                     <span>Paid</span>
-                }
+                }*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Sender)

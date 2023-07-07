@@ -1,0 +1,128 @@
+﻿@page
+@model LastHope.Pages.Staff.BillPage.IndexModel
+
+@{
+    ViewData["Title"] = "Bills";
+    Layout = "_LayoutStaff";
+}
+<style>
+    .group-btn {
+        display: flex;
+        gap: 10px;
+    }
+
+</style>
+<h1>Index</h1>
+
+<form method="post">
+    
+    <input style="width:250px" asp-for="@Model.CustomerName" placeholder="Search for customer's  name"/>
+    
+    <input type="submit" value="Search" asp-page-handler="Search">
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].RentContract.Flat.Building)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].RentContract.Flat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].RentContract.Customer.Fullname)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Sender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Receiver)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bill[0].Type)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Bill) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentContract.Flat.Building.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentContract.Flat.RoomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentContract.Customer.Fullname)
+            </td>
+            <td>
+                @{
+                    var date = item.Date.Value.ToString("dd/MM/yyyy");
+                    var value = (int)item.Value.Value;
+                }
+                @Html.DisplayFor(modelItem => date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => value) VND
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Receiver)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="flex-container group-btn">
+
+    <form method="post">
+        <input type="hidden" asp-for="CurrentPage" />
+        <input type="hidden" asp-for="TotalPage" />
+        <input type="hidden" asp-for="CustomerName" />
+        <input name="Page" value="@Model.CurrentPage" type="hidden" />
+        <div class="group-btn">
+            @if (Model.CurrentPage > 1)
+            {
+                <button type="submit" class="btn btn-primary" value="Previous" asp-page-handler="Previous">Previous</button>
+            }
+            Page: @Model.CurrentPage
+            @if (Model.TotalPage > Model.CurrentPage)
+            {
+                <button type="submit" class="btn btn-primary" value="Next" asp-page-handler="Next">Next</button>
+            }
+        </div>
+
+
+    </form>
+
+</div>

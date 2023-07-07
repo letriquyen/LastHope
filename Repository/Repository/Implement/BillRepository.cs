@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Repository.Enum;
 using Repository.Models;
 using Repository.Repository.Interface;
 using System;
@@ -24,12 +26,28 @@ namespace Repository.Repository.Implement
 
         public List<Bill> Get()
         {
-            return _context.Bills.ToList();
+            return _context.Bills
+                .Include(b => b.RentContract.Flat.Building)
+                .OrderBy(b => b.Status)
+                .OrderByDescending(b => b.Date)
+                .ToList();
         }
-
+        public List<Bill> Get(string customerName, int pageNumber, int recordPerPage, out int totalPage)
+        {
+            totalPage = (int)Math.Ceiling(1.0 * _context.Bills.Where(b => b.RentContract.Customer.Fullname.Contains(customerName)).Count() / recordPerPage);
+            return _context.Bills
+                .Include(b => b.RentContract.Customer)
+                .Include(b => b.RentContract.Flat.Building)
+                .Where(b => b.RentContract.Customer.Fullname.Contains(customerName))
+                .Skip((pageNumber - 1) * recordPerPage)
+                .Take(recordPerPage)
+                .OrderBy(b => b.Status)
+                .OrderByDescending(b => b.Date)
+                .ToList();
+        }
         public bool Update(Bill bill)
         {
-            bill.Status = 1;
+            bill.Status = BillStatus.PAID;
             _context.Bills.Update(bill);
             return _context.SaveChanges() > 0;
         }
@@ -52,7 +70,7 @@ namespace Repository.Repository.Implement
 
         public bool UpdateStatus(Bill bill)
         {
-            bill.Status = 1;
+            bill.Status = BillStatus.PAID;
             _context.Bills.Update(bill);
             return _context.SaveChanges() > 0;
         }

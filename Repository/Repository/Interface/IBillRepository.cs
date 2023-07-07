@@ -20,5 +20,6 @@ namespace Repository.Repository.Interface
         List<Bill> GetBillByCustomerID(int id);
 
         bool UpdateStatus(Bill bill);
+        List<Bill> Get(string customerName, int pageNumber, int recordPerPage, out int totalPage);
     }
 }

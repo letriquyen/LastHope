@@ -30,7 +30,7 @@ namespace Repository.Models
 
         [Range(0, 1, ErrorMessage = "0 - Not Paid; 1 - Paid")]
         [Required(ErrorMessage = "Please input information")]
-        public int? Status { get; set; }
+        public BillStatus? Status { get; set; }
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "Only allowed alphabet character")]
         [Required(ErrorMessage = "Please input information")]

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Repository.Repository.Implement
 {
@@ -64,7 +65,7 @@ namespace Repository.Repository.Implement
 
         public List<RentContract> Get(int customerId, int recordPerPage, int pageNumber, out int totalPage)
         {
-            totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Count() / recordPerPage);
+            totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Where(c => c.CustomerId == customerId).Count() / recordPerPage);
             return _context.RentContracts
                 .Where(c => c.CustomerId == customerId)
                 .OrderByDescending(c => c.StartDate)
@@ -100,5 +101,7 @@ namespace Repository.Repository.Implement
                 .Include(x => x.Customer)
                 .ToList();
         }
+
+        
     }
 }
