@@ -20,10 +20,10 @@ namespace Repository.Repository.Implement
         }
         public RentContract? Add(RentContract rentContract)
         {
-            _context.RentContracts.Add(rentContract);
+            var contract = _context.RentContracts.Add(rentContract);
             if (_context.SaveChanges() > 0)
             {
-                return rentContract;
+                return contract.Entity;
             }
             else return null;
         }

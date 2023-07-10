@@ -28,10 +28,10 @@ namespace LastHope.Pages
                 switch (account.RoleUser)
                 {
                     case Role.ADMIN:
-                        return RedirectToPage("/Chart/Index"); // tuong trung
+                        return RedirectToPage("/Chart/Index"); 
                         
                     case Role.STAFF:
-                        return RedirectToPage("/Staff/BuildingPages/Index");
+                        return RedirectToPage("/Chart/Index");
                         
                     case Role.CUSTOMER:
                         return RedirectToPage("/Customer/ListBill");

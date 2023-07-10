@@ -70,18 +70,17 @@
                 <input type="file" accept=".pdf" asp-for="ContractFile" class="form-control" />
                 <span asp-validation-for="RentContract.Contract" class="text-danger"></span>
             </div>
+            <br />
             <div class="building">
                 Terms 
                 <button id="addItemButton">Add Term</button>
                 <button id="removeItemButton">Remove Last</button>
             </div>
-            @{
-                var i = 0;
-            }
-            <div id="itemList">
+           
+            <div id="itemList" class="form-group">
                 
             </div>
-
+            <br />
             
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -112,13 +111,13 @@ $(document).ready(function() {
         var newItemHtml = `
             <div class="form-group">
                 <label>Title</label>
-                <input asp-for="Terms[${itemIndex}].Title" class="form-control" />
-                <span asp-validation-for="Terms[${itemIndex}].Title" class="text-danger"></span>
+                <input name="Terms[${itemIndex}].Title" class="form-control"/>
+                
             </div>
             <div class="form-group">
                 <label>Content</label>
-                <input asp-for="Terms[${itemIndex}].Content" class="form-control" />
-                <span asp-validation-for="Terms[${itemIndex}].Content" class="text-danger"></span>
+                <input name="Terms[${itemIndex}].Content" class="form-control"/>
+                
                 ----------------------------------------------------------------
             </div>
             
