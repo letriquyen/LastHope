@@ -24,13 +24,15 @@ namespace LastHope.Pages.Staff.MonthlyBill
 
         [BindProperty]
         public Bill Bill { get; set; } = default!;
-
-        public IActionResult OnGet(int id)
+        public string CustomerName { get; set; } = "";
+        public IActionResult OnGet(int id, string customerName)
         {
             if (HttpContext.Session.GetString("Id") == null || HttpContext.Session.GetInt32("Role") != (int)Role.STAFF)
             {
                 return Redirect("/");
             }
+            if (Bill == null) Bill = new Bill();
+            CustomerName = customerName;
             Bill.RentContractId = id;
             //ViewData["StatusList"] = new SelectList(statusList, "Id", "Id");
             ViewData["StatusList"] = new SelectList(new List<SelectListItem>

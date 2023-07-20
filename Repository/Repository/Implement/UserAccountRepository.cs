@@ -15,6 +15,7 @@ namespace Repository.Repository.Implement
 
         public bool Create(UserAccount account)
         {
+            account.Fullname = account.Email;
             _context.UserAccounts.Add(account);
             return _context.SaveChanges() > 0;
         }

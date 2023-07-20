@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace Repository.Models
 {
@@ -16,23 +17,31 @@ namespace Repository.Models
         {
         }
 
-        public virtual DbSet<Bill> Bills { get; set; } = null!;
-        public virtual DbSet<BillItem> BillItems { get; set; } = null!;
-        public virtual DbSet<Building> Buildings { get; set; } = null!;
-        public virtual DbSet<Flat> Flats { get; set; } = null!;
-        public virtual DbSet<FlatType> FlatTypes { get; set; } = null!;
-        public virtual DbSet<RentContract> RentContracts { get; set; } = null!;
-        public virtual DbSet<Service> Services { get; set; } = null!;
-        public virtual DbSet<Term> Terms { get; set; } = null!;
-        public virtual DbSet<UserAccount> UserAccounts { get; set; } = null!;
+        public virtual DbSet<Bill> Bills { get; set; }
+        public virtual DbSet<BillItem> BillItems { get; set; }
+        public virtual DbSet<Building> Buildings { get; set; }
+        public virtual DbSet<Flat> Flats { get; set; }
+        public virtual DbSet<FlatType> FlatTypes { get; set; }
+        public virtual DbSet<RentContract> RentContracts { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<Term> Terms { get; set; }
+        public virtual DbSet<UserAccount> UserAccounts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);Database=LastHopeDatabase;Trusted_Connection=True; TrustServerCertificate=true");
+                optionsBuilder.UseSqlServer(GetConnection());
             }
+        }
+
+        public string GetConnection()
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+            return configuration.GetConnectionString("LastHopeDB");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -58,13 +67,13 @@ namespace Repository.Models
                 entity.HasOne(d => d.RentContract)
                     .WithMany(p => p.Bills)
                     .HasForeignKey(d => d.RentContractId)
-                    .HasConstraintName("FK__Bill__RentContra__34C8D9D1");
+                    .HasConstraintName("FK__Bill__RentContra__32E0915F");
             });
 
             modelBuilder.Entity<BillItem>(entity =>
             {
                 entity.HasKey(e => new { e.BillId, e.ServiceId })
-                    .HasName("PK__BillItem__ADA34744E536F4A6");
+                    .HasName("PK__BillItem__ADA34744421FCBA2");
 
                 entity.ToTable("BillItem");
 
@@ -78,13 +87,13 @@ namespace Repository.Models
                     .WithMany(p => p.BillItems)
                     .HasForeignKey(d => d.BillId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__BillItem__BillID__398D8EEE");
+                    .HasConstraintName("FK__BillItem__BillID__33D4B598");
 
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.BillItems)
                     .HasForeignKey(d => d.ServiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__BillItem__Servic__3A81B327");
+                    .HasConstraintName("FK__BillItem__Servic__34C8D9D1");
             });
 
             modelBuilder.Entity<Building>(entity =>
@@ -115,12 +124,12 @@ namespace Repository.Models
                 entity.HasOne(d => d.Building)
                     .WithMany(p => p.Flats)
                     .HasForeignKey(d => d.BuildingId)
-                    .HasConstraintName("FK__Flat__BuildingID__2A4B4B5E");
+                    .HasConstraintName("FK__Flat__BuildingID__35BCFE0A");
 
                 entity.HasOne(d => d.FlatType)
                     .WithMany(p => p.Flats)
                     .HasForeignKey(d => d.FlatTypeId)
-                    .HasConstraintName("FK__Flat__FlatTypeID__2B3F6F97");
+                    .HasConstraintName("FK__Flat__FlatTypeID__36B12243");
             });
 
             modelBuilder.Entity<FlatType>(entity =>
@@ -140,8 +149,6 @@ namespace Repository.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Contract).HasMaxLength(100);
-
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
                 entity.Property(e => e.ExpiryDate).HasColumnType("date");
@@ -157,12 +164,12 @@ namespace Repository.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.RentContracts)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__RentContr__Custo__2E1BDC42");
+                    .HasConstraintName("FK__RentContr__Custo__37A5467C");
 
                 entity.HasOne(d => d.Flat)
                     .WithMany(p => p.RentContracts)
                     .HasForeignKey(d => d.FlatId)
-                    .HasConstraintName("FK__RentContr__FlatI__2F10007B");
+                    .HasConstraintName("FK__RentContr__FlatI__38996AB5");
             });
 
             modelBuilder.Entity<Service>(entity =>
@@ -195,7 +202,7 @@ namespace Repository.Models
                 entity.HasOne(d => d.RentContract)
                     .WithMany(p => p.Terms)
                     .HasForeignKey(d => d.RentContractId)
-                    .HasConstraintName("FK__Term__RentContra__31EC6D26");
+                    .HasConstraintName("FK__Term__RentContra__398D8EEE");
             });
 
             modelBuilder.Entity<UserAccount>(entity =>
@@ -218,9 +225,13 @@ namespace Repository.Models
 
                 entity.Property(e => e.Fullname).HasMaxLength(200);
 
-                entity.Property(e => e.Password).HasMaxLength(150);
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(150);
 
-                entity.Property(e => e.Phone).HasMaxLength(50);
+                entity.Property(e => e.Phone)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

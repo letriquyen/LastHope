@@ -24,7 +24,7 @@ namespace Repository.Models
         [Required(ErrorMessage = "Please choose the expiry date")]
         public DateTime? ExpiryDate { get; set; }
         public RentContractStatus? Status { get; set; }
-        [Required(ErrorMessage = "Please chooose a contract to add")]
+        
         public string? Contract { get; set; }
         [Required(ErrorMessage = "Please input title")]
         public string? Title { get; set; }

@@ -55,7 +55,8 @@ namespace Repository.Repository.Implement
         {
             totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Count() / recordPerPage);
             return _context.RentContracts
-                .OrderByDescending(c => c.StartDate)
+                .OrderBy(c => c.Status)
+                .ThenByDescending(c => c.StartDate)
                 .Skip(recordPerPage * (pageNumber - 1))
                 .Take(recordPerPage)
                 .Include(c => c.Flat.Building)
@@ -68,7 +69,8 @@ namespace Repository.Repository.Implement
             totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Where(c => c.CustomerId == customerId).Count() / recordPerPage);
             return _context.RentContracts
                 .Where(c => c.CustomerId == customerId)
-                .OrderByDescending(c => c.StartDate)
+                .OrderBy(c => c.Status)
+                .ThenByDescending(c => c.StartDate)
                 .Skip(recordPerPage * (pageNumber - 1))
                 .Take(recordPerPage)
                 .Include(c => c.Flat.Building)
@@ -81,7 +83,8 @@ namespace Repository.Repository.Implement
             totalPage = (int)Math.Ceiling(1.0 * _context.RentContracts.Count() / recordPerPage);
             return _context.RentContracts
                 .Where(c => c.Customer.Fullname.Contains(name))
-                .OrderByDescending(c => c.StartDate)
+                .OrderBy(c => c.Status)
+                .ThenByDescending(c => c.StartDate)
                 .Skip(recordPerPage * (pageNumber - 1))
                 .Take(recordPerPage)
                 .Include(c => c.Flat.Building)
