@@ -63,11 +63,12 @@ namespace LastHope.Pages.Staff.RentContractPages
                 LoadData(BuildingId);
                 return Page();
             }
-            /*if (RentContract.StartDate >= RentContract.ExpiryDate)
+            if (RentContract.StartDate >= RentContract.ExpiryDate)
             {
-                ModelState.AddModelError("ExpiryDate", "ExpiryDate must be after StartDate");
+                ModelState.AddModelError("RentContract.ExpiryDate", "ExpiryDate must be after StartDate");
+                LoadData(BuildingId);
                 return Page();
-            }*/
+            }
             if (ContractFile != null && ContractFile.Length > 0)
             {
                 using (var reader = new StreamReader(ContractFile.OpenReadStream()))
