@@ -87,7 +87,7 @@ namespace LastHope.Pages.Staff.RentContractPages
                 }
                 if (contract.Customer != null && !string.IsNullOrEmpty(contract.Customer.Email))
                 {
-                    SendEmail(contract.Customer.Email);
+                    SendEmail(contract.Customer.Email, contract.Contract, contract.Customer.Fullname);
                 }
                     
             }
@@ -117,7 +117,7 @@ namespace LastHope.Pages.Staff.RentContractPages
             }
         }
 
-        private void SendEmail(string email)
+        private void SendEmail(string email, string contract, string customerName)
         {
             string senderEmail = "safebuilding.swd@gmail.com";
             string senderPassword = "tqnvzrldadgobqgy";
@@ -127,11 +127,13 @@ namespace LastHope.Pages.Staff.RentContractPages
             MailMessage mail = new MailMessage(senderEmail, recipientEmail);
 
             mail.Subject = "LastHope new Contract";
-            mail.Body = "You got a new contract in LastHope";
-
+            mail.IsBodyHtml = true;
+            mail.Body = $"<p>You got a new contract in LastHope </p>" +
+                $"<a href=\"data:application/octet-stream;base64,{contract}\" download=\"{customerName}.pdf\">Download File</a>";
+            
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
             smtpClient.EnableSsl = true; 
-
+            
             smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
 
             try

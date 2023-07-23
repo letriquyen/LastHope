@@ -40,7 +40,8 @@
             @Html.DisplayNameFor(model => model.RentContract.Contract)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RentContract.Contract)
+            <a href="data:application/octet-stream;base64,@Model.RentContract.Contract" download="@Model.RentContract.Customer.Fullname .pdf">Download File</a>
+            
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.RentContract.Title)
@@ -58,8 +59,24 @@
             @Html.DisplayNameFor(model => model.RentContract.Flat)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RentContract.Flat.Id)
+            @Html.DisplayFor(model => model.RentContract.Flat.RoomNumber)
         </dd>
+        <dt style="color:red">Terms</dt>
+        @foreach(var term in Model.RentContract.Terms)
+        {
+            <dt class="col-sm-2">
+                Title
+            </dt>
+            <dd class="col-sm-10">
+                @term.Title
+            </dd>
+            <dt class="col-sm-2">
+                Content
+            </dt>
+            <dd class="col-sm-10">
+                @term.Content
+            </dd>
+        }
     </dl>
 </div>
 <div>
